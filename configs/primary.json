@@ -1,0 +1,123 @@
+{
+  "version": "0.1.0",
+  "execution": {
+    "mode": "internal",
+    "account_type": "simulation",
+    "endpoint": null
+  },
+  "risk": {
+    "capital": 100000,
+    "risk_per_trade": 0.0025,
+    "max_open_risk": 0.005,
+    "daily_loss_limit": 0.01,
+    "slippage_ticks": 1,
+    "latency_seconds": 0,
+    "partial_fraction": 0.5
+  },
+  "primitives": {
+    "pivot_left": 2,
+    "pivot_right": 2,
+    "break_margin": 0.01,
+    "equal_tolerance": 0.05,
+    "sweep_bars": 3,
+    "base_body_max": 0.5,
+    "impulse_body_min": 0.6,
+    "zone_ttl_minutes": 2880
+  },
+  "research": {
+    "budget": 120,
+    "seed": 17,
+    "optimization": "none",
+    "primary_metric": "net_expectancy_r",
+    "min_trades": 100,
+    "bootstrap": "journ\u00e9es, 1000 r\u00e9plications"
+  },
+  "models": [
+    {
+      "id": "M1-H1-M5",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M1-H4-M15",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 240,
+      "ltf": 15,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M5A-80-range",
+      "family": "M5A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R23",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5B-80-range",
+      "family": "M5B",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R24",
+        "R25"
+      ]
+    }
+  ]
+}

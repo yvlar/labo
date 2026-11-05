@@ -1,0 +1,906 @@
+[
+  {
+    "rule_id": "R01",
+    "sources": [
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "09:40–10:55",
+        "visual_verified": false,
+        "transcript_excerpt": "avoir récupéré la fervel du gap qu'on avait laissé précédemment, on va attendre d'avoir des signes de retournement pour venir se positionner. Ici, on a eu un change of caractère au moment où on a récupéré, on a cassé par le haut cet ancien point haut qui était plus bas que le précédent. Et c'est là que le marché nous indique que la tendance baissière en low time frame est terminée et que le marché va repartir à la hausse. Et si vous n'avez pas de change of caractère en low time frame, alors vous ne prenez pas de position. Une fois que vous avez trouvé votre change of caractère, alors vous avez deux setup et deux manières d'entrer en position avec cette stratégie. Si le change of caractère à la hausse laisse derrière vous des niveaux de fer gap à récupérer ainsi qu'une zone de dimend, alors vous allez pouvoir rentrer avec un by limite avec un ratio risky reward de 1 pour de en mettant votre point d'entrée au niveau de votre zone de dimend avec un stop loss juste en dessous de celle-ci en pensant à bien intégrer votre spreads à votre point d'entrée pour aller chercher un rassurisky reward de 1 pour 2. Et c'est en fait au 1 pour 2 que vous allez passer en break even, c'est-à-dire le stop loss au point d'entrée et que vous allez prendre une petite partie de vos profits. Et en réalité, juste après, vous allez attendre de récupérer l'ancien point haut dans une tendance haussière d'External liquidity qui est à récupérer dans ce mouvement en cours. Et vous allez pouvoir trouver ce niveau d'external liquidity, ce point haut du mouvement en cours en haut time frame pour vraiment aller chercher un maximum de profit. Le deuxième setup qu'on va aller chercher avec ces stratégies sera",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S12",
+        "url": "https://fr.tradingview.com/chart/XAUUSD/gHRfJT6R/",
+        "passage": "J’attends des confirmations en LTF",
+        "visual_verified": false
+      },
+      {
+        "id": "S13",
+        "url": "https://fr.tradingview.com/chart/XAUUSD/n9POswVQ/",
+        "passage": "Retour dans la zone → récupération éventuelle → confirmation",
+        "visual_verified": false
+      }
+    ],
+    "summary": "Retour zone HTF, confirmation de retournement LTF puis retracement de la nouvelle zone.",
+    "status": "explicite",
+    "mathematical_definition": "zone.active AND touched_at < CHoCH.available_at; entry_order après CHoCH; remplissage ultérieur.",
+    "parameters": {
+      "HTF_LTF": [
+        [
+          60,
+          5
+        ],
+        [
+          240,
+          15
+        ]
+      ]
+    },
+    "available_at": "Clôture du CHoCH, puis cotation future",
+    "variants": [
+      "M1"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R02",
+    "sources": [
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "02:45–02:58",
+        "visual_verified": false,
+        "transcript_excerpt": "moment où on récupère votre niveau d'intérêt. Si vous étiez en train d'analyser en 4 heur time frame, vous allez descendre en 15 minutes time frame. Et si vous étiez en 1 heure time frame, alors vous descendez en 5 minutes time frame pour avoir plus de précision et venir prendre vos positions en",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "12:15–12:35",
+        "visual_verified": false,
+        "transcript_excerpt": "supply demand en 4 heur time frame, alors vous allez descendre en 15 minutes time frame au moment où on récupère vos niveaux d'intérêt dans le sens de la structure précédente en 15 minutes time frame. Et si vous avez fait votre analyse de la structure en 1 heure time frame, alors vous allez descendre en 5 minutes time frame pour prendre vos positions. Et en réalité, vous pouvez utiliser n'importe quel time frame. La",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Couples H1→M5 et H4→M15.",
+    "status": "explicite",
+    "mathematical_definition": "HTF=60,LTF=5 ou HTF=240,LTF=15.",
+    "parameters": {},
+    "available_at": "Clôtures complètes",
+    "variants": [
+      "M1",
+      "M3"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R03",
+    "sources": [
+      {
+        "id": "S2",
+        "url": "https://www.youtube.com/watch?v=0Xd8M0BkzCg",
+        "passage": "00:00–02:00",
+        "visual_verified": false,
+        "transcript_excerpt": "La liquidité se forme partout sur vos graphiques et c'est souvent elle qui va déterminer si ton trade est gagnant ou perdant. Un des niveaux les plus importants où vous allez trouver le plus de liquidité sur les marchés, c'est lorsque le prix accumule. Et c'est très souvent autour des zones supply et des zones de dimend. Dans cette masterclass, je vais vous enseigner ma stratégie complète qui est basée sur la liquidité et qui va t'aider à éviter des pertes inutiles, mais surtout qui va augmenter ta précision et par la même occasion, augmenter ton win rate en mettant en adéquation tes niveaux d'intérêt et toute la liquidité que tu vas pouvoir trouver sur tes marchés et surtout les niveaux les plus importants que tu dois regarder chaque jour sur tes graphiques et donc mathématiquement faire de toi un trader qui sera bien meilleur. Si vous êtes nouveau et que vous ne connaissez pas encore les bases de la liquidité, je vais vous l'expliquer dès maintenant. Si vous êtes déjà expérimenté sur ce concept, alors pour vous, ce sera qu'un simple rappel, mais qui est super important pour comprendre la suite parce que ça va être les bases de la stratégie et des confirmations que je vais vous expliquer dans cette vidéo pour prendre des setup avec des très hautes probabilités de taux de réussite et surtout des très gros profits. La liquidité concrètement dans un marché, elle se réfère à quoi ? C'est des ordres qui sont généralement sous forme de stop loss et de buy stop et de sell stop. En réalité, il y a deux formes très courantes de liquidité que vous allez retrouver et c'est les deux qu'on va utiliser dans la méthode la plus avancée que je vais vous expliquer dans cette vidéo. Ce sont les equal donc des points hauts qui sont égaux et les equal des points bas qui sont égaux. Et en réalité refléter ces niveaux comme une zone support ou une zone de résistance. Ensuite, il y a les lignes de tendance ascendante et descendante haussière ou baissière. En réalité, une éducation qu'on peut voir de manière très générale par rapport au trading retail de particulier. On va vous suggérer que lorsque vous voyez un niveau de résistance sur un marché, vous devriez chercher à vendre sur cette résistance. On est bien d'accord là-dessus. Donc après, on a un deuxième retest, on touche le niveau. Tout ce qui se situe à partir de là devient un bon niveau de vente. L'idée générale c'est donc que lorsque vous vendez, votre stopl sera",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S13",
+        "url": "https://fr.tradingview.com/chart/XAUUSD/n9POswVQ/",
+        "passage": "récupération éventuelle de liquidité",
+        "visual_verified": false
+      }
+    ],
+    "summary": "Le sweep au retest est enregistré, filtre optionnel distinct.",
+    "status": "interprétation",
+    "mathematical_definition": "wick au-delà de pivot confirmé + clôture de réintégration; persistent break exclu.",
+    "parameters": {
+      "max_bars": 3,
+      "margin": 0.01
+    },
+    "available_at": "Clôture de réintégration",
+    "variants": [
+      "M1",
+      "M6A"
+    ],
+    "divergences": "Ne pas confondre sweep à formation et au retest. Aucune obligation universelle ajoutée."
+  },
+  {
+    "rule_id": "R04",
+    "sources": [
+      {
+        "id": "S1",
+        "url": "https://www.youtube.com/watch?v=paKplgt-KOA",
+        "passage": "02:35–03:55",
+        "visual_verified": false,
+        "transcript_excerpt": "plus hauts et des points bas de plus en plus hauts, alors on est en tendance haussière et on doit simplement chercher à acheter. Et pour te montrer comment correctement marquer tes points hauts et tes points bas dans un marché, on va commencer depuis ce niveau. Ici, puisque c'est à partir de là qu'on a formé un plus bas sur le marché à ce niveau. Donc, ça devient notre low. Ensuite, on forme ce qu'on appelle un higher high parce que ce point haut est plus haut que le précédent. Maintenant, ce higher high vient nous valider ce higher low parce que tant qu'on ne fait pas un nouveau point haut au-dessus de ce niveau, le marché peut faire ce qu'il veut à l'intérieur de ce range sans que ce point bas soit considéré comme un niveau de structure validé. Pour que ce point bas soit validé, on doit voir la formation d'un nouveau point haut. Ensuite, une fois que ce nouveau point haut s'est formé ici, on va former un higher low. Mais encore une fois, ce higher low ne sera pas valide tant qu'on ne casse pas cette zone et qu'on ne vient pas faire un nouveau point haut plus haut que le précédent. Et une fois que ce nouveau point haut vient être créé, il vient nous valider automatiquement ce point bas plus haut que le précédent comme une nouvelle jambe significative de la tendance. Et tant que le marché reste au-dessus de ce niveau, à partir de là, le marché reste en tendance haussière et continuera à former des higher low et des higher high. Bien sûr, à un moment, les marchés, ils se retournent et ça, on va en parler juste après. Mais comprendre la structure de tendance et savoir si on est en tendance haussière ou en tendance baissière à travers les points hauts et les points bas, c'est la première chose à faire et c'est la plus importante de toutes les étapes qu'on va voir dans ce",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "09:40–10:05",
+        "visual_verified": false,
+        "transcript_excerpt": "avoir récupéré la fervel du gap qu'on avait laissé précédemment, on va attendre d'avoir des signes de retournement pour venir se positionner. Ici, on a eu un change of caractère au moment où on a récupéré, on a cassé par le haut cet ancien point haut qui était plus bas que le précédent. Et c'est là que le marché nous indique que la tendance baissière en low time frame est terminée et que le marché va repartir à la hausse. Et si vous n'avez pas de change of caractère en low time frame, alors vous ne prenez pas de position. Une fois que vous avez trouvé votre change of caractère, alors vous avez",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Structure haussière/baissière et CHoCH, représentés par pivots confirmés.",
+    "status": "interprétation",
+    "mathematical_definition": "Extremum strict sur L+R+1 bougies; clôture au-delà du dernier pivot + marge; BOS si même direction, CHoCH si direction opposée; première cassure initialise la direction.",
+    "parameters": {
+      "left": 2,
+      "right": 2,
+      "margin": 0.01
+    },
+    "available_at": "pivot_time + R bougies clôturées",
+    "variants": [
+      "toutes"
+    ],
+    "divergences": "La lecture discrétionnaire des grandes vagues n’est pas reproduite fidèlement par des fenêtres fixes."
+  },
+  {
+    "rule_id": "R05",
+    "sources": [
+      {
+        "id": "S5",
+        "url": "https://www.youtube.com/watch?v=nOaffdm1eoU",
+        "passage": "11:15–12:05",
+        "visual_verified": false,
+        "transcript_excerpt": "bougie d'impulsion baissière qui va clôturer sous son plus bas. On appelle ça une buy to cell. Et pour une dimen zone, c'est la même chose mais à l'inverse et dans ce cas-là, on appelle ça une cell. Mais en réalité, personnellement, je suis pas ultra strict sur le fait d'avoir toujours une bougie buy to sell ou cell to buy parce qu'en réalité, sur une zone de dimend, je vais même pouvoir trouver ma bougie pivot sur une bougie haussière qui s'est fait ensuite engloutir par une autre bougie haussière. Ce que je vais vraiment rechercher, c'est ce point pivot dans le prix qui a été causé juste avant d'envoyer ce mouvement agressif. C'est moment où le marché évolue comme une pause avant d'envoyer son mouvement agressif. Mais par contre, retient bien que dans une zone de dimen, la bougie d'impulsion doit toujours clôturer au-dessus du plus haut de la bougie précédente. Et pour une zone supply, elle doit clôturer en dessous du plus bas de la bougie précédente pour que la zone soit valide. Et tu peux le voir, la grosse différence entre ces deux",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Zone pivot validée par clôture de l’impulsion au-delà de la bougie précédente.",
+    "status": "explicite",
+    "mathematical_definition": "Demande: close[i]>high[i-1]+m; offre: close[i]<low[i-1]-m; limites high/low du pivot. Pas de couleur opposée obligatoire.",
+    "parameters": {
+      "programmation": "petit corps <=0.5; impulsion >=0.6"
+    },
+    "available_at": "Clôture de i",
+    "variants": [
+      "M1",
+      "M2",
+      "M3",
+      "M6"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R06",
+    "sources": [
+      {
+        "id": "S5",
+        "url": "https://www.youtube.com/watch?v=nOaffdm1eoU",
+        "passage": "10:15–13:10",
+        "visual_verified": false,
+        "transcript_excerpt": "prises de position et je trade même en live sous vos yeux plus de trois à quatre fois par semaine pour vous prouver que la stratégie que je vous présente ici est littéralement la plus puissante que vous allez pouvoir trader sur les marchés. Et pour toutes les personnes qui veulent avoir accès à tout ça, c'est totalement gratuit et vous allez tout pouvoir retrouver sur le lien qui est dans la description. Et pour les trois types de zones supply et de zones de dimend, je vais vraiment venir vous conseiller d'utiliser les deux premières dans un premier temps, les zones de range et les zones pivot. Et en réalité, leur nom parle de même. Une zone dite de range, c'est simplement quand tu as une grosse accumulation et que le prix vient sortir violemment à la hausse ou à la baisse de cette accumulation. À ce moment-là, ton accumulation devient ta zone supply ou ta zone de dimend. C'est lorsque dans cette accumulation, à la base de ce mouvement agressif, haussier ou baissier, tu as eu une action du prix sur une ou deux bougies bien spécifiques et tu vas pouvoir tracer ta zone à partir de cette bougie qui s'est fait elle-même engloutir par le mouvement agressif. Et si tu veux être encore plus précis, tu peux même prendre les deux dernières bougies juste avant de se faire engloutir. Pour une supply zone, ça va être très généralement une bougie. Pour une supply zone, ça va très souvent être une bougie haussière suivie d'une bougie d'impulsion baissière qui va clôturer sous son plus bas. On appelle ça une buy to cell. Et pour une dimen zone, c'est la même chose mais à l'inverse et dans ce cas-là, on appelle ça une cell. Mais en réalité, personnellement, je suis pas ultra strict sur le fait d'avoir toujours une bougie buy to sell ou cell to buy parce qu'en réalité, sur une zone de dimend, je vais même pouvoir trouver ma bougie pivot sur une bougie haussière qui s'est fait ensuite engloutir par une autre bougie haussière. Ce que je vais vraiment rechercher, c'est ce point pivot dans le prix qui a été causé juste avant d'envoyer ce mouvement agressif. C'est moment où le marché évolue comme une pause avant d'envoyer son mouvement agressif. Mais par contre, retient bien que dans une zone de dimen, la bougie d'impulsion doit toujours clôturer au-dessus du plus haut de la bougie précédente. Et pour une zone supply, elle doit clôturer en dessous du plus bas de la bougie précédente pour que la zone soit valide. Et tu peux le voir, la grosse différence entre ces deux méthodes, c'est qu'avec une zone pivot, tu vas pouvoir affiner énormément ton entrée sur une zone de dien ou une zone supply trouvée avec la première méthode en range. Et la troisième méthode, celle que j'utilise beaucoup moins, c'est ce qu'on appelle la fratal zone qui va être de venir se positionner sur la mèche qui a été créée juste avant d'envoyer ce mouvement agressif. Mais en réalité, c'est un niveau plus complexe parce que tu vas louper pas mal d'opportunités. Et évidemment, plus tu vas venir affiner ta zone, plus tu vas gagner en précision, ce qui va réduire ton stop loss et améliorer ton ratio risqué reward. Mais attention à une chose, ça va aussi augmenter ton nombre de trades raté, c'est-à-dire d'opportunités où le prix ne va même pas venir récupérer ton niveau d'intérêt sur lequel tu comptais rentrer en position. Et le plus important, c'est de venir trouver justement un équilibre qui vous convient et d'ensuite venir prendre votre position et de laisser tourner votre trade pour aller chercher votre TP. Et ce que je vous conseille, c'est surtout pas de venir mélanger ces trois méthodes et de changer quand vous en avez envie. Parce qu'en faisant ça, la seule chose que vous allez obtenir, c'est des résultats qui seront moins bons sur le long terme. Mon meilleur conseil, honnêtement, quand vous débutez avec les supply d'en, c'est de toujours utiliser la deuxième méthode avec les bougies pivotes parce que globalement, c'est",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Base, pivot et fractale de mèche restent des géométries distinctes.",
+    "status": "interprétation",
+    "mathematical_definition": "Base = 3 bougies compactes puis clôture hors bornes; pivot = précédente; fractale = mèche distale précédente.",
+    "parameters": {
+      "base_bars": 3,
+      "body_max": 0.5
+    },
+    "available_at": "Clôture de l’impulsion",
+    "variants": [
+      "primitives"
+    ],
+    "divergences": "Les stratégies utilisent pivot par défaut. La mèche numérique est une approximation de l’affinement discrétionnaire."
+  },
+  {
+    "rule_id": "R07",
+    "sources": [
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "08:17–08:34",
+        "visual_verified": false,
+        "transcript_excerpt": "simplement sous la forme d'un ferval gap. Ce que j'appelle un boulish gap. C'est simplement une séquence de trois bougies où on marque le point haut de la première bougie puis le point bas de la troisième et on remarque qu'il y a un gap entre ces deux niveaux. Et c'est une façon simple de repérer un potentiel displacement. Et maintenant, on va simplement chercher la continuation vers",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "FVG haussier/baissier à trois bougies ; suivi du remplissage.",
+    "status": "explicite",
+    "mathematical_definition": "Bull: high[i-2]<low[i]; bear: low[i-2]>high[i]; fill borné [0,1].",
+    "parameters": {},
+    "available_at": "Après troisième clôture",
+    "variants": [
+      "M1-FVG",
+      "M3",
+      "M5B"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R08",
+    "sources": [
+      {
+        "id": "S8",
+        "url": "https://www.youtube.com/watch?v=8FTweNWh-oA",
+        "passage": "10:40–11:00",
+        "visual_verified": false,
+        "transcript_excerpt": "opportunité et passer à la suivante. Le but ici, c'est d'être très mécanique. Et une fois qu'une imbalance est ouverte, j'attends simplement que le marché vienne la remplir à 100 % pour ensuite trader dans la direction d'une zone supply ou d'une demand. Maintenant, une demand zone, c'est simplement une bougie d'indécision avant un gros mouvement haussier. Tu peux le voir ici, on a cette bougie de type doji avec des",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Préférence de retour à Supply/Demand d’origine plutôt qu’entrée FVG systématique.",
+    "status": "explicite",
+    "mathematical_definition": "M1 entre sur pivot; FVG est caractéristique ou filtre explicite, jamais zone entrée implicite.",
+    "parameters": {},
+    "available_at": "Confirmation de la zone",
+    "variants": [
+      "M1",
+      "M3"
+    ],
+    "divergences": "Le range de déplacement n’est pas un opening range. Préférence relevée dans transcription automatique, images non vérifiées."
+  },
+  {
+    "rule_id": "R10",
+    "sources": [
+      {
+        "id": "S1",
+        "url": "https://www.youtube.com/watch?v=paKplgt-KOA",
+        "passage": "10:30–11:25",
+        "visual_verified": false,
+        "transcript_excerpt": "bougie d'indécision avec de grandes mèches des deux côtés. On peut trouver la bougie pivot. Et quand le marché revient dans cette zone de demand, on cherche simplement à acheter. Et comme on l'a expliqué, parce que ce prix est perçu comme un discount, on sait que les acheteurs contrôlent le marché. Mais tout le monde n'est pas prêt à acheter là-haut. Donc, cette demand zone, où beaucoup d'achats ont eu lieu précédemment, sera vue comme un très bon prix pour acheter l'actif. Donc, dès que le marché revient sur ce niveau, on cherche une opportunité d'achat. Et ici, vous avez un exemple de trade très simple. Un trade basé sur cette zone ressemblerait exactement à ça. On place notre stop loss sous la zone, on entre directement sur la demand et notre target se situe sur les anciens points hauts. Vers le prochain nouveau point haut ou alors le précédent, qui s'est déjà formé et qui n'a pas été récupéré. Parce que si le marché est en tendance haussière, il est censé continuer à nous faire des points hauts de plus en plus hauts. Donc, viser les précédents points hauts, c'est une manière très sécuritaire de trader. Et comme tu peux le voir, ce trade t'aurait donné environ",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "10:30–10:53",
+        "visual_verified": false,
+        "transcript_excerpt": "en fait au 1 pour 2 que vous allez passer en break even, c'est-à-dire le stop loss au point d'entrée et que vous allez prendre une petite partie de vos profits. Et en réalité, juste après, vous allez attendre de récupérer l'ancien point haut dans une tendance haussière d'External liquidity qui est à récupérer dans ce mouvement en cours. Et vous allez pouvoir trouver ce niveau d'external liquidity, ce point haut du mouvement en cours en haut time frame pour vraiment aller chercher un maximum",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Objectif structurel connu et stop derrière invalidation.",
+    "status": "explicite",
+    "mathematical_definition": "Cible = pivot HTF non cassé le plus proche au-delà de l’entrée, figé à décision; stop distale ±tick (ask pour short).",
+    "parameters": {
+      "target": "nearest unbroken HTF pivot"
+    },
+    "available_at": "Décision avant activation ordre",
+    "variants": [
+      "M1",
+      "M2",
+      "M3",
+      "E1"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R11",
+    "sources": [
+      {
+        "id": "S3",
+        "url": "https://www.youtube.com/watch?v=kiXYHk37_mQ",
+        "passage": "08:09–09:46",
+        "visual_verified": false,
+        "transcript_excerpt": "Quand tu as plusieurs zones, tu choisis ce qu'on appelle l'extrême zone. C'est la zone la plus éloignée du prix actuel dans cette nouvelle jambe haussière ou baissière qui a été créée ici. Notre jambe haussière va de ce point bas à ce point haut. C'est cette poussée bouliche haussière et on cherche un retracement pour rentrer à l'achat plus bas à l'intérieur de cette jambe haussière. Donc ici l'extrême zone c'est la zone la plus basse possible dans un scénario d'achat et c'est cette zone là qu'on vient prendre comme référence. Si tu veux placer ton BU limite, tu le mets toujours sur l'extrême zone. Pourquoi ? parce que c'est celle-là qui va te donner le meilleur rassure risque reward et qui rend ton trade beaucoup plus safe. Pour résumer, l'extreme Zone, c'est la zone la plus éloignée du prix dans un scénario d'achat. Ça veut dire que c'est la zone la plus basse possible et ici ça en fait notre extrême zone. Si on doit placer un ordre limite entre ces deux zones, la règle standard c'est de viser l'extrême. Premièrement parce que c'est là qu'on attrape le meilleur rassuris reward et deuxièmement parce que c'est plus sécuritaire pour votre capital. Mais attention, si on place un ordre sur cette zone, stop loss juste là, on peut avoir raison sur la direction du marché et quand même se faire stop loss si le prix décide d'aller chercher plus bas au niveau de l'extrême zone avant de repartir. Et c'est pour ça qu'ici la façon la plus safe, c'est de placer un buy limite et de directement le mettre sur l'extrême zone. Dans ce cas précis, ça vous donne un trade à plus de 5.5 de ratio risque et reward. Maintenant, il y a un autre scénario qui peut se produire. Le marché peut réagir plus haut avant même de toucher notre extrême zone. Et si tu ne te focuses que sur l'extrême zone, alors tu vas potentiellement rater cette position. rater cette opportunité. Donc ce qu'on fait dans ce cas-là, c'est utiliser ce que j'appelle une confirmation standard. Rien de nouveau, juste un nom pour une approche simple de confirmation de structure. Concrètement, une confirmation standard, ça ressemble simplement à attendre que le prix atteigne le haut de notre zone pour ensuite regarder s'il y a un change of",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S3",
+        "url": "https://www.youtube.com/watch?v=kiXYHk37_mQ",
+        "passage": "14:15–14:30",
+        "visual_verified": false,
+        "transcript_excerpt": "vous analysez en 4 heur, vous descendez en 1 heure puis en 30 minutes. Vous analysez en daily, vous descendez en 4h puis en 1 heure. Vous analysez en 30 minutes, vous descendez en 15 minutes puis en 5 minutes, mais jamais plus. Et en réalité, même un seul affinage, ça peut largement suffire pour sécuriser",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Limite sur la sous-zone extrême, avec risque d’occasions manquées.",
+    "status": "explicite",
+    "mathematical_definition": "À activation HTF sélectionner parmi sous-zones déjà confirmées et emboîtées la plus basse en achat / plus haute en vente; aucune substitution après retest.",
+    "parameters": {
+      "refinements": [
+        [
+          240,
+          60,
+          30
+        ],
+        [
+          1440,
+          240,
+          60
+        ],
+        [
+          30,
+          15,
+          5
+        ]
+      ]
+    },
+    "available_at": "Activation de la zone parent",
+    "variants": [
+      "M2"
+    ],
+    "divergences": "Affinement historique distinct de confirmation actuelle M1; génération exige données couvrant le parent."
+  },
+  {
+    "rule_id": "R12",
+    "sources": [
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "10:52–11:28",
+        "visual_verified": false,
+        "transcript_excerpt": "de profit. Le deuxième setup qu'on va aller chercher avec ces stratégies sera quand le marché ne vous donne pas de ferval gap après un change of caractère. À ce moment-là, vous allez simplement tracer un retracement de Fibonacci avec les mêmes paramètres que je vous mets sous vos yeux du point haut au point bas de ce mouvement et vous allez simplement venir chercher des entrées approximativement au milieu de la zone entre les 618 et les 786 de ce retracement de Fibonacci en appliquant la même stratégie que précédemment avec un rassuris reward de 1 pour 2 pour venir passer votre stop loss au point d'entrée et prendre une petite partie des profits et ensuite en allant chercher l'ancien niveau d'external liquidity qui a été laissé plus haut en haut time frame. Avant de vous faire un",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Branche OTE en absence de FVG après CHoCH.",
+    "status": "explicite",
+    "mathematical_definition": "Entrée=end-(end-start)*0.702; start=dernier pivot opposé confirmé; end=extrême du CHoCH, ancrages figés.",
+    "parameters": {
+      "depth": 0.702,
+      "band": [
+        0.618,
+        0.786
+      ]
+    },
+    "available_at": "Clôture CHoCH",
+    "variants": [
+      "M3"
+    ],
+    "divergences": "Absence de FVG mesurée sur clôture CHoCH; pas de branche de secours après perte. Nombres corroborés par le contexte mais non par images."
+  },
+  {
+    "rule_id": "R13",
+    "sources": [
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "19:45–20:09",
+        "visual_verified": false,
+        "transcript_excerpt": "pertinents. Vous allez utiliser votre retracement Fibonacci et le tracer du point bas au point haut de ce mouvement que vous êtes en train de regarder. Et en réalité, vous devez toujours chercher des positions en dessous des 50 % de ce retracement puisque ici on est à la hausse et donc on veut trader dans la zone discount, là où le prix est peu cher. Si on était dans une structure qui était baissière, alors on aurait pris position au-dessus des 50 % en zone premium, là où le prix est trop cher. Et",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Discount/premium et OTE sont deux notions distinctes.",
+    "status": "interprétation",
+    "mathematical_definition": "discount: midpoint(zone)<(last_high+last_low)/2; OTE = profondeur 61.8–78.6% d’une impulsion figée.",
+    "parameters": {
+      "OTE": [
+        0.618,
+        0.786
+      ]
+    },
+    "available_at": "Pivots confirmés au moment de mesure",
+    "variants": [
+      "contexte",
+      "M3"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R20",
+    "sources": [
+      {
+        "id": "S9",
+        "url": "https://www.youtube.com/watch?v=zORpvHHx0dM",
+        "passage": "04:42–05:51",
+        "visual_verified": false,
+        "transcript_excerpt": "la description maintenant passons au graphique ici on a repéré la structure du marché en 1h time frame on descend maintenant en 15 minutes time frame à 15h30 pour voir la clôture de cette bougie et pouvoir dessiner notre op directement sur les marchés et comme la tendance est haussière on va simplement attendre les deux setups que je vous ai présenté précédemment donc soit une cassure à la hausse puis un pullback sur le haut de l'OP soit comme vous le voyez ici on vient réintégrer l'OP par le bas et donc on attend tout simplement des bougies d'indécision sur le point bas de l'OP en faisant un pullback dessus pour rentrer en position et à minima venir chercher le point haut de l'OP et ici vous le voyez c'est exactement ce qui se passe on forme plusieurs bougies avec de petits corps et de grandes mèches ce qui signifie tout simplement que les acheteurs sont en train de reprendre le contrôle du prix et ce simple setup vous aura déjà permis de prendre un trade à de de de ratio risky reward en plus de ça ce qui est intéressant c'est que vous le voyez on est sorti violemment par le haut en cassant le point haut de l'OP ici on applique le deuxième setup et on attend simplement un pullback dans l'OP pour venir se positionner au moment où on récupère l'OP on descend de 1 he time frame en 15 minutes ou en 5 minutes time frame pour venir trouver des entrées plus précises vous allez pouvoir appliquer une stratégie simple que j'utilise déjà depuis plus de 7 ans qui",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "OPR M15 avec contexte, cassure puis retest.",
+    "status": "interprétation",
+    "mathematical_definition": "Range US 09:30–09:45 NY depuis 15 M1 complètes; biais HTF; clôture hors range, retest puis confirmation directionnelle au-delà de bougie retest.",
+    "parameters": {
+      "body_min": 0.6,
+      "window": 80
+    },
+    "available_at": "09:45 New York puis confirmation",
+    "variants": [
+      "M4A"
+    ],
+    "divergences": "Ancrage NY et seuils = conventions projet; 15h30 locale de la vidéo ne suffit pas à prouver le fuseau."
+  },
+  {
+    "rule_id": "R21",
+    "sources": [
+      {
+        "id": "S9",
+        "url": "https://www.youtube.com/watch?v=zORpvHHx0dM",
+        "passage": "00:45–02:05",
+        "visual_verified": false,
+        "transcript_excerpt": "même pouvoir utiliser cette stratégie sur n'importe quel actif la première chose à faire c'est de tracer une zone en extension du point bas au point haut de cette bougie en M15 à 15h30 la première stratégie avec cette OPR et qui est la plus simple c'est de venir couper avec un retracement de Fibonacci votre OP en plusieurs niveaux avec les 50 % les 75 % et les 25 %. ici la stratégie est simple quand on arrive sur les points bas de l'OP et que vous voyez des bougies d'indécision ou alors des doubles bottom vous pouvez simplement vous attendre à ce que le prix vienne récupérer le point haut de l'OP et inversement si on récupère le point haut de l'OP je vous conseille toujours de trader dans le sens de la tendance mais ici si vous voyez plusieurs bougies avec des petits corps et de grandes mèches vous avez de très grandes probabilités que les les vendeurs sont en train de reprendre le contrôle du prix et donc repartir à la baisse c'est la première manière dont vous allez pouvoir utiliser l'OP dans votre stratégie et en réalité je vais vous mettre plein de petites notes à côté pour vous expliquer tous les points très importants quand vous allez trader l'OP vous devez toujours être dans le sens de la tendance en 1 he et en 4 He c'est-à-dire repérer la structure du marché si elle est haussière ou baissière ou en consolidation pour vous positionner et profiter de l'OP avec un maximum de probabilité de taux de réussite après ça vous allez simplement descendre en time frame en 15 minutes ou en 5 minutes pour trouver des bougies d'indécision des doubles bottom des doubles top pour tout",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "OPR M15 : réintégration/rejet, objectif borne opposée.",
+    "status": "interprétation",
+    "mathematical_definition": "wick hors borne et clôture réintégrée directionnelle avec corps/range>=0.6; cible opposée figée.",
+    "parameters": {
+      "context_filter": false
+    },
+    "available_at": "Clôture après construction complète",
+    "variants": [
+      "M4B"
+    ],
+    "divergences": "Contexte observé sans obligation de biais dans la variante de rejet."
+  },
+  {
+    "rule_id": "R22",
+    "sources": [
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "04:38–05:08",
+        "visual_verified": false,
+        "transcript_excerpt": "Maintenant qu'on a identifié les niveaux clés sur notre graphique en 5 minutes, le marché vient à peine d'ouvrir à 15h30. Ce que l'on fait, c'est simplement marquer le point haut et le point bas de la première bougie. Et c'est ce qui nous donne notre opening range en 5 minutes. Maintenant, on passe à l'étape suivante. On va simplement descendre sur la time frame de 1 minute puisque en 5 minutes, on a déjà marqué notre point haut et notre point bas, ce qui nous donne simplement cinq bougies. Ici, cinq bougies de 1 minute. Donc, l'intérieur du range forma durant cette bougie de 5 minutes qui précédait. Et vous voyez à quel point la stratégie est",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Range M5 construit 09:30–09:35 America/New_York.",
+    "status": "interprétation",
+    "mathematical_definition": "5 M1 contiguës; max high/min low; pas de règle UTC fixe.",
+    "parameters": {
+      "display_timezone": "America/Toronto"
+    },
+    "available_at": "09:35 NY",
+    "variants": [
+      "M5A",
+      "M5B"
+    ],
+    "divergences": "Les horaires locaux cités dans la vidéo ne sont pas utilisés comme fuseau universel."
+  },
+  {
+    "rule_id": "R23",
+    "sources": [
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "05:14–06:28",
+        "visual_verified": false,
+        "transcript_excerpt": "range formé en 5 minutes. Comme tu le vois ici, on a notre ail en 5 minutes qui a été marqué avec notre 5 minutes l' ce que l'on attend, c'est simplement une bougie qui vienne clôturer à l'extérieur de notre range et ensuite on pourra parler des différentes entrées et même voir qu'est-ce que le displacement et pourquoi parfois il est important d'attendre cette confirmation avant de rentrer en position. Mais dans ces critères précis, on attend simplement une cassure au-dessus ou en dessous de ces niveaux confirmés par une clôture de bougie à l'extérieur du range. Comme tu peux le voir ici, on est sur le graphique en une minute, le prix pousse vers le bas et on a maintenant une clôture de la bougie sous le point bas de notre range formé précédemment en 5 minutes. On passe maintenant à l'étape suivante. Chercher une entrée sur notre range 5 minutes et viser la continuation. Ici, on a le point haut 5 minutes, le point bas. On casse vers le bas. Le prix remonte. Retest quelques bougies de rejet. Une bougie de confirmation. Et maintenant, on cherche simplement des entrées sur notre range 5 minutes avec notre stop juste au-dessus de la cassure et notre target a un minimum de 1 pour de rassuris reward vers le bas. Une fois qu'on a cette cassure baissière, on cherche simplement du price action fort pour confirmer notre test vers le bas. Pour les stops, juste au-dessus de la cassure, on vise principalement un ratio risqué reward de 1 pour 2. C'est-à-dire que si on risque par exemple 10 dollars, on vise minimum",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "M5A : clôture hors range, retest puis confirmation.",
+    "status": "interprétation",
+    "mathematical_definition": "Break.close > upper+m ou <lower-m; bougie postérieure touche borne; autre bougie clôture au-delà de son extrême avec corps>=0.6.",
+    "parameters": {
+      "body_min": 0.6,
+      "max_delay": 30
+    },
+    "available_at": "Clôture confirmation ; marché prochaine ouverture disponible",
+    "variants": [
+      "M5A"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R24",
+    "sources": [
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "07:53–10:00",
+        "visual_verified": false,
+        "transcript_excerpt": "différent. Ce que l'on veut, c'est simplement attendre une cassure au-dessus du range en 5 minutes avec un displacement. Ici, on est sur la time frame 1 minute. On a sauté l'étape numéro 1 parce que c'est exactement la même. Peu importe le modèle d'entrée. La différence, c'est simplement l'étape 2 et l'étape 3, le modèle d'entrée. Comme tu peux le voir, on a cette cassure au-dessus du range en 5 minutes avec un displacement, un mouvement agressif qui vient de se valider. Et la façon la plus simple de voir le displacement, c'est simplement sous la forme d'un ferval gap. Ce que j'appelle un boulish gap. C'est simplement une séquence de trois bougies où on marque le point haut de la première bougie puis le point bas de la troisième et on remarque qu'il y a un gap entre ces deux niveaux. Et c'est une façon simple de repérer un potentiel displacement. Et maintenant, on va simplement chercher la continuation vers le haut. Si on vient faire un retest, très bien, mais très souvent, le marché ne va pas effectuer ce retest et va parfois continuer à monter de manière directionnelle. Alors bien sûr, il faut quand même garder des règles pour entrer en position, surtout lorsqu'on a un displacement, donc la validation, que le marché a du pur momentum et cherche à continuer le mouvement actuel. Et ici, on va garder presque les mêmes règles que le modèle d'origine. Mais là, on va être un tout petit peu plus agressif. Et pour valider le fait de rentrer légèrement plus agressivement, c'est très intéressant de venir le mettre en corrélation avec la time frame supérieure, soit sur un niveau d'intérêt en time frame supérieur ou alors selon le sens de la tendance ou avec toutes sortes de edges potentiels qui vont te permettre d'anticiper une continuation sans retest. À partir de là, on marque simplement le point haut du range en 5 minutes. Le prix casse au-dessus, crée du displacement. Et maintenant, on se pose simplement la question où est-ce que l'on va rentrer ? En réalité, on rentre simplement à la clôture de cette troisème bougie. Ici, on a la première, la deuxè, la trisème. Une fois que le fervel du gap se forme et que la troisème bougie clôture et montre du price action fort, du réel momentum, c'est là que l'on peut rentrer à la clôture de la troisième bougie. Stop loss au même endroit que sur le break and retest sous le range en 5 minutes. Et on cherche là aussi un ratio risque et reward minimum de 1 pour de et c'est de cette simple manière que tu dois utiliser le deuxième modèle d'entrée avec une entrée légèrement plus agressive mais qui va des fois te permettre d'éviter de passer à côté d'une opportunité. Il a donc ses avantages mais aussi ses inconvénients et le plus important est de surtout venir le mettre en corrélation avec une",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "M5B : déplacement et FVG, décision à troisième clôture.",
+    "status": "explicite",
+    "mathematical_definition": "FVG directionnel et clôture hors OPR; première bougie encore dedans, deuxième corps/range>=0.6; marché au prochain open bid/ask.",
+    "parameters": {
+      "context_filter": "variante isolée"
+    },
+    "available_at": "Troisième clôture, exécution jamais rétroactive",
+    "variants": [
+      "M5B"
+    ],
+    "divergences": "Le prix de clôture illustré n’est pas garanti exécutable ; code attend cotation ultérieure."
+  },
+  {
+    "rule_id": "R25",
+    "sources": [
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "00:31–00:42",
+        "visual_verified": false,
+        "transcript_excerpt": "il y a énormément de volume, afin de venir chercher des opportunités basées sur ces 5 premières minutes et de les trader seulement pendant les 80 minutes [musique] qui vont suivre cette ouverture de session. Et ce que j'aime particulièrement avec cette stratégie,",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "01:40–01:50",
+        "visual_verified": false,
+        "transcript_excerpt": "simplement d'apprendre une stratégie simple et prouvée que vous allez ensuite pouvoir utiliser pour structurer votre aide dans les 90 premières minutes après l'ouverture de New York ou même l'ouverture de n'importe quelle session.",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "12:40–12:50",
+        "visual_verified": false,
+        "transcript_excerpt": "l'extérieur de ma supply. Stop loss au-dessus de l'ancien point haut qui s'est formé ou alors à l'extérieur de notre point haut de notre opening range en 5 minutes avec un TP à de R sur Sky",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Fenêtres 80/90 minutes et variantes de stop.",
+    "status": "explicite",
+    "mathematical_definition": "Fin des signaux = 09:30 NY + 80 min référence; 90 min variante. Stops : borne opposée, retest, confirmation.",
+    "parameters": {
+      "windows": [
+        80,
+        90
+      ],
+      "counted_from": "09:30 NY"
+    },
+    "available_at": "Fenêtre fixée avant test",
+    "variants": [
+      "M5A",
+      "M5B"
+    ],
+    "divergences": "80 minutes après ouverture et 90 premières minutes apparaissent dans la transcription. Convention de départ explicite, pas de choix selon résultats."
+  },
+  {
+    "rule_id": "R26",
+    "sources": [
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "06:05–06:29",
+        "visual_verified": false,
+        "transcript_excerpt": "simplement des entrées sur notre range 5 minutes avec notre stop juste au-dessus de la cassure et notre target a un minimum de 1 pour de rassuris reward vers le bas. Une fois qu'on a cette cassure baissière, on cherche simplement du price action fort pour confirmer notre test vers le bas. Pour les stops, juste au-dessus de la cassure, on vise principalement un ratio risqué reward de 1 pour 2. C'est-à-dire que si on risque par exemple 10 dollars, on vise minimum 20 dollars. C'est la façon la plus",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S10",
+        "url": "https://www.youtube.com/watch?v=q7a9eXDsxYU",
+        "passage": "09:40–09:48",
+        "visual_verified": false,
+        "transcript_excerpt": "Et on cherche là aussi un ratio risque et reward minimum de 1 pour de et c'est de cette simple manière que tu dois utiliser le deuxième modèle d'entrée",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Objectif fixe 2R OPR M5.",
+    "status": "explicite",
+    "mathematical_definition": "target=entry_reference+direction*2*abs(entry_reference-stop); cible figée avant fill.",
+    "parameters": {
+      "R": 2
+    },
+    "available_at": "Décision",
+    "variants": [
+      "M5",
+      "E2"
+    ],
+    "divergences": "Le R encaissé peut différer de 2 après gap, frais et arrondis."
+  },
+  {
+    "rule_id": "R30",
+    "sources": [
+      {
+        "id": "S11",
+        "url": "https://www.youtube.com/watch?v=Bw_1sO1Jzw0",
+        "passage": "02:30–03:15",
+        "visual_verified": false,
+        "transcript_excerpt": "Byide liquidity. Ensuite, on va attendre la clôture de la bougie suivant ce fort mouvement haussier parce que vous le voyez, on a quand même eu de grosses bougies vertes, ce qui nous indique une forte pression acheteuse. Et là, vous le voyez, on a une confirmation principale avec la bougie suivante qui vient nous faire une bougie englobante baissière avec l'entrée massive des vendeurs sur le marché et surtout des equal en ayant le même point haut que la bougie précédente. Ce qui nous valide ici un retournement après avoir récupéré cette byside liquidity. Et c'est à ce moment-là que vous avez une indication très puissante que votre tournement est validé avec un displacement baissier. Et avec cette bougie englobante et ces high qui ont été laisser, vous allez pouvoir rentrer en position à la vente avec un stop loss juste au-dessus de l'ancien point haut en allant chercher un ancien point bas qui n'a toujours pas été récupéré. Ici, vous le voyez, on a un fort mouvement agressif haussier qui",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Sweep dans une zone puis englobante, expérimental.",
+    "status": "interprétation",
+    "mathematical_definition": "Sweep depuis contact + corps actuel englobe le corps précédent, direction HTF, corps/range>=0.6.",
+    "parameters": {
+      "body_min": 0.6
+    },
+    "available_at": "Clôture LTF",
+    "variants": [
+      "M6A"
+    ],
+    "divergences": "Continuation seule implémentée; contre-tendance non implémentée."
+  },
+  {
+    "rule_id": "R31",
+    "sources": [
+      {
+        "id": "S11",
+        "url": "https://www.youtube.com/watch?v=Bw_1sO1Jzw0",
+        "passage": "07:40–08:30",
+        "visual_verified": false,
+        "transcript_excerpt": "bas. Et donc à ce moment-là, vous seriez rentré bêtement en position et vous vous seriez fait stop loss directement. Alors qu'en attendant d'avoir des bougies de réjection, même si le point bas a déjà été récupéré et vous le voyez, c'est exactement ce qui se passe. On a une de trois bougies avec un petit corps et de grandes mèches qui nous indiquent en réalité que les acheteurs sont en train de rentrer sur le marché et qu'il y a un fort combat entre les acheteurs et les vendeurs. Et la bougie la plus importante dans cette configuration, c'est la première bougie haussière. Pourquoi ? Parce que cette première bougie de réjection a un petit corps et une grande mèche en dessous de son corps. Ce qui nous indique en réalité que les vendeurs ont voulu vendre le prix à ce moment-là, mais que les acheteurs sont rentrés massivement sur le marché et ont complètement submergé les vendeurs et ont ravalé cette bougie. Juste après, vous attendez simplement une première bougie haussière, ce qui nous indique que les acheteurs ont gagné ce combat pour vous positionner avec un stop loss en dessous de l'ancien point bas et un take profit sur l'ancien point",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Rejet par mèche puis confirmation, expérimental.",
+    "status": "interprétation",
+    "mathematical_definition": "Mèche distale précédente>=0.5 range; clôture suivante au-delà de son extrême, corps/range>=0.6.",
+    "parameters": {
+      "wick_min": 0.5
+    },
+    "available_at": "Clôture LTF",
+    "variants": [
+      "M6B"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R32",
+    "sources": [
+      {
+        "id": "S11",
+        "url": "https://www.youtube.com/watch?v=Bw_1sO1Jzw0",
+        "passage": "10:25–11:10",
+        "visual_verified": false,
+        "transcript_excerpt": "vous attendre ? À avoir un nouveau retracement haussier pour créer un nouveau point haut plus bas que le précédent avant d'envoyer un nouveau mouvement baissier. Mais tout ce que je vous ai montré là, ça suffit pas pour rentrer en position. Donc ce qu'on va faire, c'est qu'on va maintenant descendre en time frame pour avoir plus de confluence pour rentrer en position. Et en réalité ici ce qu'on voit c'est que le prix est en train de consolider, d'accumuler et juste au-dessus on a un niveau de résistance qui va être intéressant à analyser. Ensuite on déroule un peu le prix pour voir qu'est-ce qui se passe et vous le voyez, on vient exploser ce niveau de résistance en l'ignorant complètement et en passant juste au-dessus. Et rappelez-vous, je vous l'ai toujours dit, on ne rentre jamais sur une impulsion. Et comme on a complètement ignoré cette zone de résistance, on peut maintenant s'attendre à ce qu'elle joue un rôle de support pour le prix et donc simplement attendre un pullback sur celle-ci et donc des bougies baissières afin de prendre une position à la hausse. Et vous le voyez, c'est",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Cassure/retest de consolidation après CHoCH, expérimental.",
+    "status": "interprétation",
+    "mathematical_definition": "CHoCH confirmé, base de 3 corps compacts, clôture de cassure, puis retest directionnel ultérieur.",
+    "parameters": {
+      "base_bars": 3,
+      "body_max": 0.5
+    },
+    "available_at": "Clôture du retest confirmé",
+    "variants": [
+      "M6C"
+    ],
+    "divergences": "Passages à affiner; ne constitue pas une transcription exacte du modèle visuel."
+  },
+  {
+    "rule_id": "R40",
+    "sources": [
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "10:30–10:51",
+        "visual_verified": false,
+        "transcript_excerpt": "en fait au 1 pour 2 que vous allez passer en break even, c'est-à-dire le stop loss au point d'entrée et que vous allez prendre une petite partie de vos profits. Et en réalité, juste après, vous allez attendre de récupérer l'ancien point haut dans une tendance haussière d'External liquidity qui est à récupérer dans ce mouvement en cours. Et vous allez pouvoir trouver ce niveau d'external liquidity, ce point haut du mouvement en cours en haut time frame",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "11:14–11:29",
+        "visual_verified": false,
+        "transcript_excerpt": "retracement de Fibonacci en appliquant la même stratégie que précédemment avec un rassuris reward de 1 pour 2 pour venir passer votre stop loss au point d'entrée et prendre une petite partie des profits et ensuite en allant chercher l'ancien niveau d'external liquidity qui a été laissé plus haut en haut time frame. Avant de vous faire un récapitulatif du plan que je vous ai",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Sortie structurelle, partiel et break-even à 2R.",
+    "status": "explicite",
+    "mathematical_definition": "À 2R sortir fraction initiale arrondie, stop au fill effectif à partir de bougie suivante; solde vers cible initiale.",
+    "parameters": {
+      "partial_fraction": 0.5
+    },
+    "available_at": "Atteinte de 2R, BE activé à la prochaine bougie",
+    "variants": [
+      "E4"
+    ],
+    "divergences": "50% est hypothèse du projet. Break-even net peut être négatif après frais."
+  },
+  {
+    "rule_id": "R41",
+    "sources": [
+      {
+        "id": "S5",
+        "url": "https://www.youtube.com/watch?v=nOaffdm1eoU",
+        "passage": "21:50–22:28",
+        "visual_verified": false,
+        "transcript_excerpt": "rentrer en position, tu dois savoir exactement où est-ce que tu vas sortir. Et là, je pourrais vous faire une vidéo de 40 minutes pour vous expliquer comment avoir un bon trade management. Mais en réalité, si tu veux être profitable le plus rapidement possible, la meilleure astuce que je peux te donner, c'est d'avoir un ratio risqué reward fixe. Le principe est simple, tu vas toujours viser un pour deux ou un pour tr ou un pour 4 de ratio risque reward. Et ce que je te conseille si tu es débutant, c'est de viser toujours les trois de ratisky reward. Et c'est une approche qui va surtout t'aider dans tes débuts à mettre tes émotions de côté. Parce qu'en réalité sur ce type de position, tu vas même pas te poser la question de où est-ce que tu dois aller prendre tes profits. Soit ta zone t'envoie un mouvement assez agressif",
+        "caption_kind": "asr"
+      },
+      {
+        "id": "S1",
+        "url": "https://www.youtube.com/watch?v=paKplgt-KOA",
+        "passage": "15:18–15:30",
+        "visual_verified": false,
+        "transcript_excerpt": "d'avoir un trade gagnant avec un bon ratio risque et reward. Mais au minimum, je te conseille toujours d'avoir 2.5 de ratio risk reward sur chacune de tes positions, donc de gagner 250 pour 100 euros risqués. Mais le setup reste valide. Et si on regarde ce qui se",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "3R pédagogique de S5, seuil minimum 2,5R de S1.",
+    "status": "explicite",
+    "mathematical_definition": "E3: cible fixe3R; E5: ne soumettre que si ratio structurel>=2.5.",
+    "parameters": {
+      "E3": 3,
+      "E5": 2.5
+    },
+    "available_at": "Avant entrée",
+    "variants": [
+      "E3",
+      "E5"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "R42",
+    "sources": [
+      {
+        "id": "S4",
+        "url": "https://www.youtube.com/watch?v=0-4X_L8PeG4",
+        "passage": "14:22–14:38",
+        "visual_verified": false,
+        "transcript_excerpt": "encore plus loin et vous mettre une checklist en vous expliquant toutes les règles que vous devez appliquer. Au niveau de votre risque et votre money management, vous ne devez jamais risquer au-delà de 2 à 3 % de votre capital par position. Vous devez toujours passer votre stop loss au point d'entrée en break even et prendre une partie des",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Risque 2–3% mentionné dans S4, non adopté.",
+    "status": "explicite",
+    "mathematical_definition": "Aucune application; le défaut projet est 0.25%.",
+    "parameters": {},
+    "available_at": "Sans effet moteur",
+    "variants": [
+      "documentation"
+    ],
+    "divergences": "Mention dans transcription ASR, non vérifiée visuellement. Non adoptée par le projet."
+  },
+  {
+    "rule_id": "R50",
+    "sources": [
+      {
+        "id": "S14",
+        "url": "https://www.tradingview.com/support/solutions/43000502040-volume-profile-indicators-basic-concepts/",
+        "passage": "POC: price level with highest traded volume; VA souvent 70%",
+        "visual_verified": false
+      },
+      {
+        "id": "S7",
+        "url": "https://www.youtube.com/watch?v=nzo6dNkGg1w",
+        "passage": "00:00–02:00",
+        "visual_verified": false,
+        "transcript_excerpt": "Après 7 ans de trading, je vais vous présenter l'un des outils les plus puissants que j'utilise tous les jours sur mes graphiques, le volume profile. Et dans cette vidéo, je vais venir vous détailler les différentes manières de l'utiliser pour faire exploser vos résultats en trading. C'est une vidéo qui m'a été énormément demandée. Alors, je compte sur vous pour mettre un maximum de j'aimes et à vous abonner à la chaîne. C'est parti. L'outil que vous voyez sur mon graphique juste ici, il s'agit du volume profile qui peut vous donner des entrées sniper super précise sur les marchés. Et en réalité, la plupart des gens ne connaissent même pas ce simple outil. Mais après avoir regardé cette vidéo, vous pourrez l'ajouter à tout votre arsenal de trading parce que le volume profile est sûrement l'un des meilleurs outils que vous allez pouvoir utiliser sur vos graphiques puisque c'est un outil polyvalent utilisé par les traders pour analyser le volume qui est négocié sur les marchés. à chaque niveau de prix et dans un lapse de temps une time frame spécifique. Et contrairement à tous les indicateurs de volume que vous pouvez trouver à droite à gauche, le volume sur une période fixe va vous permettre d'afficher la distribution du volume verticalement sur vos graphiques à un prix défini. Mais en réalité, vous vous posez peut-être la question pourquoi est-ce que c'est si important ? parce qu'en fait ça va vous permettre de repérer des niveaux très précis sur lequels le volume est élevé et sur lequel il y a un fort intérêt. Et c'est sur ces niveaux que les traders vont un maximum chercher à acheter ou vendre ce niveau. Et en fait, lorsque le prix vient revisiter cette zone, alors vous allez pouvoir vous attendre à voir une nouvelle réaction se présenter sur vos graphique, ce qui en réalité vous offre une nouvelle opportunité d'entrer ou de sortir de vos positions. Le volume profile va vous mettre sur une plage donnée d'un point A à un point B où est-ce que la majorité de l'activité de trading a eu lieu dans ce niveau. Et c'est ce qu'on appelle la value àa. Et en réalité cette zone de valeur, elle va",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "POC et Value Area sur plage déjà terminée.",
+    "status": "explicite",
+    "mathematical_definition": "POC argmax V(bin); VA contiguë étendue depuis POC jusqu’à 70% de volume; uniformisation du volume M1 entre low/high.",
+    "parameters": {
+      "bins": 32,
+      "value_area": 0.7
+    },
+    "available_at": "Toutes les bougies du profil doivent avoir end<=available_at",
+    "variants": [
+      "primitive Volume Profile"
+    ],
+    "divergences": "Approximation OHLC, tick volume non global. Filtre non activé dans les modèles."
+  },
+  {
+    "rule_id": "R51",
+    "sources": [
+      {
+        "id": "S6",
+        "url": "https://www.youtube.com/watch?v=QMlpPrxMV44",
+        "passage": "01:30–04:05",
+        "visual_verified": false,
+        "transcript_excerpt": "aucune hésitation. Ma stratégie supply Demand repose sur trois étapes simples. La première étape, ça va être d'identifier bougie pivot mais pas n'importe laquelle. On va toujours chercher une bougie qui se trouve dans une zone d'accumulation à la base d'une expansion, qu'elle soit haussière ou baissière, parce que c'est cette bougie qui va représenter en réalité l'endroit où les gros acteurs du marché sont intervenus comme la smart money et les institutions. Et c'est ce qui va me permettre de repérer une zone vraiment pertinente. La deuxième étape, ça va être d'analyser les différentes time frames. sur une grande time frame comme H1 ou H4, tu vas trouver des niveaux d'intérêt clair et ensuite descendre sur des time frames inférieurs comme M15 ou M5 pour venir affiner ton niveau d'entrée. Et c'est ce travail en multi frame qui est essentiel parce qu'il va te permettre de combiner la vision globale du marché avec la précision nécessaire pour avoir des entrées chirurgicales. Et la troisième étape, ça va être de construire ton setup. Qu'est-ce que ça veut dire concrètement ? Ça veut dire que tu vas chercher des confluences. par exemple une zone supply ou une zone de dimand avec une structure claire et parfois de la liquidité interne à ton setup. Et c'est tous ces éléments réunis qui vont te permettre de définir ton point d'entrée, ton stop loss et ton TP. L'idée ici, c'est de transformer une observation graphique en un plan de trade concret, clair et mécanique. Et ce qui est très important avec cette méthode, c'est qu'elle reste simple et répétable chaque jour. Tu n'auras pas besoin d'indicateur, pas besoin de deviner dans quel sens va aller le marché. Chaque jour, tu vas appliquer le même plan avec ces trois étapes de la même manière. Et c'est ça qui fait la force de la stratégie des supply demand parce qu'elle va donner un cadre précis mais en même temps adaptable aux conditions de marché. Et dans un instant, je vais te montrer des exemples concrets directement sur les graphiques pour que tu vois exactement comment s'applique la stratégie en temps réel. Mais on va d'abord approfondir chaque point de la stratégie. Chaque matin, entre 8h et 10h, je vais prendre un moment pour analyser les marchés et trouver mes niveaux d'intérêt en utilisant les trois sessions de marché. Et je vais t'expliquer pourquoi cette plage horaire. Ici, pour la stratégie, tu vas utiliser les trois sessions de marché et chaque matin, en réveillant, tu vas pouvoir trouver la liquidité qui s'est déversée sur la session asiade. Le setup qu'on va vouloir récupérer va être, comme je te l'ai expliqué précédemment, une accumulation qui s'est produit durant la session asiane, juste avant une impulsion. parce que c'est ici, à la base de cette impulsion, que tu vas pouvoir trouver ta bougie pivot pour ensuite affiner ton entrée et trouver une zone de dimand ou une zone supply. Et cette analyse, tu vas toujours la faire en 30 minutes ou 1 heure time frame. Ensuite, peu importe que ton niveau soit récupéré durant la session de Londres ou durant la session de New York, la stratégie est la même. Tu vas tracer ta bougie pivot en 1 heure ou M30 à la base de cette zone de dimand, donc",
+        "caption_kind": "asr"
+      }
+    ],
+    "summary": "Horaires Gold/Asie/Londres de S6 non authentifiés.",
+    "status": "non vérifié",
+    "mathematical_definition": "Aucun filtre de sessions S6 activé tant que fuseau des heures locales non vérifié.",
+    "parameters": {},
+    "available_at": "Bloqué",
+    "variants": [
+      "S6",
+      "contexte"
+    ],
+    "divergences": "Pas de conversion arbitraire de 15h30 ou de l’heure matinale."
+  },
+  {
+    "rule_id": "H01",
+    "sources": [],
+    "summary": "Primitives et durée de vie numériques.",
+    "status": "hypothèse",
+    "mathematical_definition": "Pivot L=R=2; m=0.01; égalité tolérance0.05; sweep<=3 bougies; zone expire 2880 minutes; clôture distale invalide.",
+    "parameters": {
+      "left": 2,
+      "right": 2,
+      "ttl_minutes": 2880
+    },
+    "available_at": "Après clôtures requises",
+    "variants": [
+      "toutes"
+    ],
+    "divergences": "Tick/dimension des seuils doivent être adaptés par nouvel enregistrement, jamais sur test final."
+  },
+  {
+    "rule_id": "H02",
+    "sources": [],
+    "summary": "Risque et protections du projet, sans attribution à OlinVest.",
+    "status": "hypothèse",
+    "mathematical_definition": "Risque transaction0.25%; maximum ouvert0.5%; une position; perte quotidienne1%; pas de martingale.",
+    "parameters": {
+      "risk": 0.0025,
+      "max_open": 0.005,
+      "daily_loss": 0.01
+    },
+    "available_at": "Avant chaque entrée",
+    "variants": [
+      "toutes"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "H03",
+    "sources": [],
+    "summary": "Exécution conservatrice sur OHLC bid/ask M1.",
+    "status": "hypothèse",
+    "mathematical_definition": "Marché next open après latence; limite pénètre1tick; stop prioritaire si stop/cible touchés; gap stop au pire open + slippage; pas de profit cible sur bougie fill limite.",
+    "parameters": {
+      "slippage_ticks": 1,
+      "latency_seconds": 0
+    },
+    "available_at": "Clôture M1 pour connaissance du fill; fill marché daté open",
+    "variants": [
+      "toutes"
+    ],
+    "divergences": "Pas de carnet: volumes disponibles/queue, remplissages partiels d’ordres et spread intrabougie inconnus."
+  },
+  {
+    "rule_id": "H04",
+    "sources": [],
+    "summary": "Une occasion soumise par session OPR et par zone HTF.",
+    "status": "hypothèse",
+    "mathematical_definition": "Une zone utilisée ne redevient pas candidate; OPR.sent après soumission; mesure expirations/refus sans resélection.",
+    "parameters": {
+      "attempts": 1
+    },
+    "available_at": "Soumission de l’ordre",
+    "variants": [
+      "toutes"
+    ],
+    "divergences": "La vidéo montre parfois plusieurs occasions. Référence volontairement bornée, pas règle authentifiée."
+  },
+  {
+    "rule_id": "H05",
+    "sources": [],
+    "summary": "Choix de la cible et position de l’OTE figés.",
+    "status": "hypothèse",
+    "mathematical_definition": "Cible=plus proche pivot HTF non cassé; OTE extrême courant du CHoCH et dernier pivot opposé. Pas d’ancrage redessiné.",
+    "parameters": {},
+    "available_at": "Décision",
+    "variants": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "H06",
+    "sources": [],
+    "summary": "Paramètres M1 minimaux séparés du filtre FVG et du sweep.",
+    "status": "hypothèse",
+    "mathematical_definition": "M1 minimal sans obligation FVG ni sweep. Ablation isolée require_fvg ou require_sweep.",
+    "parameters": {},
+    "available_at": "Expérience préenregistrée",
+    "variants": [
+      "M1",
+      "M1-fvg",
+      "M1-sweep"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "H10",
+    "sources": [],
+    "summary": "Baseline comparable : cassure OPR simple.",
+    "status": "hypothèse",
+    "mathematical_definition": "Même OPR M5, même fenêtre 80 minutes, sans retest; stop borne opposée et cible2R; coûts/risque identiques.",
+    "parameters": {},
+    "available_at": "Clôture hors range puis prochaine ouverture",
+    "variants": [
+      "BASELINE"
+    ],
+    "divergences": "Aucune divergence tranchée sans variante."
+  }
+]

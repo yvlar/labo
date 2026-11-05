@@ -1,0 +1,604 @@
+{
+  "version": "0.1.0",
+  "execution": {
+    "mode": "internal",
+    "account_type": "simulation",
+    "endpoint": null
+  },
+  "risk": {
+    "capital": 100000,
+    "risk_per_trade": 0.0025,
+    "max_open_risk": 0.005,
+    "daily_loss_limit": 0.01,
+    "slippage_ticks": 1,
+    "latency_seconds": 0,
+    "partial_fraction": 0.5
+  },
+  "primitives": {
+    "pivot_left": 2,
+    "pivot_right": 2,
+    "break_margin": 0.01,
+    "equal_tolerance": 0.05,
+    "sweep_bars": 3,
+    "base_body_max": 0.5,
+    "impulse_body_min": 0.6,
+    "zone_ttl_minutes": 2880
+  },
+  "research": {
+    "budget": 120,
+    "seed": 17,
+    "optimization": "none",
+    "primary_metric": "net_expectancy_r",
+    "min_trades": 100,
+    "bootstrap": "journ\u00e9es, 1000 r\u00e9plications"
+  },
+  "models": [
+    {
+      "id": "M1-H1-M5",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M1-H4-M15",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 240,
+      "ltf": 15,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M5A-80-range",
+      "family": "M5A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R23",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5B-80-range",
+      "family": "M5B",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R24",
+        "R25"
+      ]
+    },
+    {
+      "id": "M1-sweep",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": true,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M1-fvg",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": true,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M1-E2",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M1-E3",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E3",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M1-E4",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E4",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M1-E5",
+      "family": "M1",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E5",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    },
+    {
+      "id": "M2-H4-H1-M30",
+      "family": "M2",
+      "version": "0.1.0",
+      "htf": 240,
+      "ltf": 30,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R11"
+      ],
+      "refinement_tfs": [
+        60,
+        30
+      ]
+    },
+    {
+      "id": "M2-D1-H4-H1",
+      "family": "M2",
+      "version": "0.1.0",
+      "htf": 1440,
+      "ltf": 60,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R11"
+      ],
+      "refinement_tfs": [
+        240,
+        60
+      ]
+    },
+    {
+      "id": "M2-M30-M15-M5",
+      "family": "M2",
+      "version": "0.1.0",
+      "htf": 30,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R11"
+      ],
+      "refinement_tfs": [
+        15,
+        5
+      ]
+    },
+    {
+      "id": "M3-OTE",
+      "family": "M3",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E4",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R12"
+      ]
+    },
+    {
+      "id": "M5A-80-confirmation",
+      "family": "M5A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "confirmation",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R23",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5A-80-retest",
+      "family": "M5A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "retest",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R23",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5A-90-range",
+      "family": "M5A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 90,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R23",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5A-context",
+      "family": "M5A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": true,
+      "rule_ids": [
+        "R22",
+        "R23",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5B-80-confirmation",
+      "family": "M5B",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "confirmation",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R24",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5B-90-range",
+      "family": "M5B",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 90,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R22",
+        "R24",
+        "R25"
+      ]
+    },
+    {
+      "id": "M5B-context",
+      "family": "M5B",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": true,
+      "rule_ids": [
+        "R22",
+        "R24",
+        "R25"
+      ]
+    },
+    {
+      "id": "M4A-context",
+      "family": "M4A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": true,
+      "rule_ids": [
+        "R20"
+      ]
+    },
+    {
+      "id": "M4B-reject",
+      "family": "M4B",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R21"
+      ]
+    },
+    {
+      "id": "M6A-continuation",
+      "family": "M6A",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R30"
+      ]
+    },
+    {
+      "id": "M6B-continuation",
+      "family": "M6B",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R31"
+      ]
+    },
+    {
+      "id": "M6C-continuation",
+      "family": "M6C",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R32"
+      ]
+    },
+    {
+      "id": "BASELINE-breakout",
+      "family": "BASELINE",
+      "version": "0.1.0",
+      "htf": 60,
+      "ltf": 1,
+      "exit": "E2",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "H10"
+      ]
+    }
+  ]
+}

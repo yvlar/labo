@@ -1,0 +1,7 @@
+{
+  "start": "2025-01-01T00:00:00Z",
+  "train_end": "2025-04-01T00:00:00Z",
+  "validation_end": "2025-07-01T00:00:00Z",
+  "end": "2025-10-01T00:00:00Z",
+  "note": "Exemple uniquement; fixer selon les donn\u00e9es AVANT toute \u00e9valuation."
+}
