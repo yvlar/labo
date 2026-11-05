@@ -1,0 +1,17 @@
+{
+  "browser": "Chromium syst\u00e8me, Playwright",
+  "desktop": [
+    1440,
+    1050
+  ],
+  "mobile": [
+    390,
+    844
+  ],
+  "javascript_errors": [],
+  "rules_visible": 34,
+  "models_visible": 27,
+  "result": "PASS",
+  "market_data_used": false,
+  "server_stopped": true
+}
