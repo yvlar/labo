@@ -5,7 +5,7 @@ from copy import deepcopy
 from datetime import timedelta
 from dataclasses import replace
 from pathlib import Path
-from lab.data import validate_instrument
+from lab.data import validate_instrument,Bar
 from lab.engine import Engine
 from lab.execution import Broker, Intent
 from lab.primitives import Pivot, Zone, Structure, fibonacci
@@ -20,6 +20,10 @@ def variant(family):
 
 
 class AuditRegressions(unittest.TestCase):
+    def test_provider_incomplete_flag_is_not_ignored(self):
+        with self.assertRaises(ValueError):Bar.parse(bar(0).record()|{'complete':False})
+        self.assertEqual(Bar.parse(bar(0).record()|{'complete':True}),bar(0))
+
     def test_caller_cannot_mutate_frozen_engine_parameters(self):
         config=cfg();instrument=spec();e=Engine(config,instrument)
         config['risk']['slippage_ticks']=999

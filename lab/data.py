@@ -57,6 +57,8 @@ class Bar:
 
     @classmethod
     def parse(cls, row):
+        if 'complete' in row and str(row['complete']).lower() not in {'true','1'}:
+            raise ValueError('Bougie déclarée incomplète par le fournisseur')
         return cls(dt(row['time']), **{k: float(row[k]) for k in
                    ('open','high','low','close','ask_open','ask_high','ask_low','ask_close')},
                    volume=float(row.get('volume') or 0), minutes=int(row.get('minutes') or 1))
