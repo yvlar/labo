@@ -25,5 +25,8 @@
   "price_unit": "USD_per_troy_ounce",
   "market_sessions": [],
   "market_sessions_source": "",
-  "market_closures": []
+  "market_closures": [],
+  "account_currency": "USD",
+  "provider_symbol": "XAUUSD",
+  "reference_symbol": "OANDA:XAUUSD"
 }

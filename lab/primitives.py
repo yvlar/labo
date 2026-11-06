@@ -37,6 +37,7 @@ class Structure:
         self.trend = 0
         self.pending_sweeps = {}
         self.last_sweep = None
+        self.sweeps=[]
 
     def push(self, b):
         events=[]
@@ -97,16 +98,19 @@ class Structure:
             # Sweep requires wick beyond, close back, within bounded bars; persistent break is rejected.
             wick=b.high>p.price+margin if side==1 else b.low<p.price-margin
             back=b.close<p.price if side==1 else b.close>p.price
-            if wick and not p.swept and not crossed:
+            if wick and not p.swept:
                 self.pending_sweeps.setdefault(p.id,(p,len(self.bars)))
-            if p.id in self.pending_sweeps:
-                _,started=self.pending_sweeps[p.id]
-                if crossed or len(self.bars)-started>self.cfg['sweep_bars']:
-                    del self.pending_sweeps[p.id]
-                elif back:
-                    p.swept=True;self.last_sweep=(b.end,-side)
-                    emit('SWEEP',pivot_id=p.id,direction=-side,level=p.price)
-                    del self.pending_sweeps[p.id]
+        # A temporary close outside is not retroactively erased as a structure break.
+        # Its later reintegration is a NEW event, available only on that later close.
+        for pid,(p,started) in list(self.pending_sweeps.items()):
+            back=b.close<p.price if p.side==1 else b.close>p.price
+            if len(self.bars)-started>self.cfg['sweep_bars']:
+                del self.pending_sweeps[pid]
+            elif back:
+                p.swept=True;self.last_sweep=(b.end,-p.side)
+                self.sweeps.append({'available_at':b.end,'direction':-p.side,'pivot_id':p.id})
+                emit('SWEEP',pivot_id=p.id,direction=-p.side,level=p.price)
+                del self.pending_sweeps[pid]
         if len(self.bars)>=2:
             p=self.bars[-2]
             rng=max(p.high-p.low,1e-12)
@@ -120,7 +124,7 @@ class Structure:
                 pattern=('Rally' if incoming==1 else 'Drop')+'–Base–'+('Rally' if d==1 else 'Drop')
                 if p.high>p.low:
                     z=Zone(f'Z{self.minutes}:{p.time.isoformat()}:{d}',d,p.low,p.high,p.time,b.end,
-                           'pivot',pattern,formed_sweep=any(x['kind']=='SWEEP' for x in events),
+                           'pivot',pattern,formed_sweep=any(p.time<=s['available_at']<=b.end and s['direction']==d for s in self.sweeps),
                            bos=any(k=='BOS' and s==d for k,s in breaks))
                     self.zones.append(z);emit('ZONE_ACTIVE',**asdict(z))
         if len(self.bars)>=3:

@@ -100,6 +100,17 @@ def validate_instrument(meta):
         raise ValueError('Laboratoire exclusivement XAU/USD : symbole XAUUSD requis')
     if meta.get('currency')!='USD' or meta.get('price_kind')!='bid_ask':
         raise ValueError('Seuls USD et bid/ask séparés sont pris en charge')
+    if meta.get('account_currency','USD' if meta.get('synthetic') else None)!='USD':
+        raise ValueError('Devise du compte USD explicite requise; conversion CAD non implémentée')
+    provider_symbol=meta.get('provider_symbol')
+    if provider_symbol is not None:
+        import re
+        if not isinstance(provider_symbol,str) or not re.fullmatch(r'XAU(?:USD|_USD|/USD)(?:[._-][A-Za-z0-9]+)?',provider_symbol):
+            raise ValueError('Symbole fournisseur Gold explicite requis; ETF/futur refusé')
+    if not meta.get('synthetic') and meta.get('verified') and not provider_symbol:
+        raise ValueError('Symbole réellement demandé au fournisseur manquant')
+    if str(meta.get('provider','')).upper()=='OANDA' and provider_symbol!='XAU_USD':
+        raise ValueError('OANDA : symbole API XAU_USD requis; référence graphique OANDA:XAUUSD')
     for key in ['tick_size','point_value','contract_size','min_qty','qty_step','margin_rate']:
         if not isinstance(meta.get(key),(int,float)) or not math.isfinite(meta[key]) or meta[key]<=0:
             raise ValueError('Spécification instrument invalide : '+key)

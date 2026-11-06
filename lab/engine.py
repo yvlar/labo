@@ -6,7 +6,7 @@ from .execution import Broker
 from .strategies import Model
 from .gold import GoldDesk, validate_profile
 
-FAMILIES={'M1','M2','M3','M4A','M4B','M5A','M5B','M6A','M6B','M6C','BASELINE'}
+FAMILIES={'M1','M2','M3','M4A','M4B','M5A','M5B','M6A','M6B','M6C','BASELINE','SD_DIRECT'}
 
 def validate_config(cfg):
     if cfg.get('execution')!={'mode':'internal','account_type':'simulation','endpoint':None}:
@@ -28,6 +28,11 @@ def validate_config(cfg):
     if len({m['id'] for m in cfg['models']})!=len(cfg['models']):
         raise ValueError('Identifiants de stratégies dupliqués')
     for m in cfg['models']:
+        if m.get('min_structural_r') is not None and (type(m['min_structural_r']) not in (int,float) or not math.isfinite(m['min_structural_r']) or m['min_structural_r']<0):
+            raise ValueError('Seuil de comparaison structurel invalide')
+        if m.get('context_mode','continuation') not in {'continuation','reversal'} or (
+                m.get('context_mode')=='reversal' and not m['family'].startswith('M6')):
+            raise ValueError('Retournement de contexte réservé aux variantes M6 explicites')
         if m['family'] not in FAMILIES or m['exit'] not in {'E1','E2','E3','E4','E5'}:
             raise ValueError('Modèle/politique inconnu')
         if m['htf']<=m['ltf'] or m['ltf']<1 or m['order_ttl_minutes']<=0:

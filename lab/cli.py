@@ -25,11 +25,24 @@ def main():
     check=sub.add_parser('check-config');check.add_argument('--config',default='configs/primary.json')
     gold=sub.add_parser('gold-status');gold.add_argument('--config',default='configs/primary.json')
     gold.add_argument('--metadata',default='configs/instrument.example.json')
+    verify=sub.add_parser('verify-engine',help='Parité et anti-fuite; horloge virtuelle explicite, jamais un flux actuel')
+    visual=sub.add_parser('export-decision',help='Deux graphiques : connu à la décision et suite observée')
+    for parser in (verify,visual):
+        for key in ('dataset','config','output'):parser.add_argument('--'+key,required=True)
+        parser.add_argument('--model');parser.add_argument('--software-test',action='store_true')
+    visual.add_argument('--seq',type=int,required=True)
     a=p.parse_args()
     try:
         if hasattr(a,'experiment') and (Path(a.experiment).name!=a.experiment or a.experiment in ('.','..')):
             raise ValueError('Nom d’expérience invalide')
-        if a.command=='import-data':print(import_file(a.file,a.metadata,ROOT))
+        if a.command in {'verify-engine','export-decision'}:
+            from .verification import verify,export_decision
+            if a.command=='verify-engine':
+                report=verify(ROOT,a.dataset,a.config,a.output,a.model,a.software_test)
+                print(canonical({'passed':report['passed'],'synthetic':report['synthetic'],'performance_metrics':None}))
+                if not report['passed']:p.exit(1,'Vérification échouée; consulter verification.json\n')
+            else:print(export_decision(ROOT,a.dataset,a.config,a.output,a.seq,a.model,a.software_test))
+        elif a.command=='import-data':print(import_file(a.file,a.metadata,ROOT))
         elif a.command=='preregister':print(preregister(ROOT,a.config,a.dataset,a.splits,a.experiment))
         elif a.command=='evaluate':print(evaluate(ROOT,a.experiment))
         elif a.command=='gold-status':

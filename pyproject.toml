@@ -4,10 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "olinv-lab"
-version = "0.2.0"
+version = "0.3.0"
 description = "Laboratoire causal et exclusivement simulé de méthodes publiques"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.optional-dependencies]
+audit = ["matplotlib>=3.8"]
 
 [project.scripts]
 olinv-lab = "lab.cli:main"

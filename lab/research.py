@@ -10,6 +10,38 @@ from statistics import mean
 from .data import canonical, digest, dt, read_csv, validate_instrument
 from .engine import Engine, validate_config
 
+def evaluation_verdict(result,min_trades):
+    ci=result['daily_bootstrap_expectancy_ci95']
+    if result['trades']<min_trades or not ci:return 'non concluant'
+    if ci[1]<=0:return 'échec'
+    if ci[0]<=0:return 'non concluant'
+    return 'à confirmer prospectivement'
+
+def stress_bar(b,multiplier):
+    """OHLC spread stress is an envelope approximation, never synchronized tick reconstruction."""
+    from dataclasses import replace
+    ask={name:getattr(b,name)+multiplier*(getattr(b,'ask_'+name)-getattr(b,name)) for name in ('open','high','low','close')}
+    ask['high']=max(ask['high'],ask['open'],ask['close'])
+    ask['low']=min(ask['low'],ask['open'],ask['close'])
+    return replace(b,**{'ask_'+k:v for k,v in ask.items()})
+
+def opportunity_metrics(events,trades,start,end):
+    ev=[e for e in events if start<=e['available_at']<end]
+    ids={e['opportunity_id'] for e in ev if e['kind']=='OPPORTUNITY'}
+    orders={e['order']['id']:e['order'] for e in ev if e['kind']=='ENTRY_PENDING'}
+    outcomes={e['order_id']:e['kind'] for e in events if e['available_at']<end and e.get('order_id') in orders
+              and e['kind'] in {'OPEN','CLOSED','EXPIRED','ORDER_REFUSED','INVALIDATED'}}
+    filled={e['order_id'] for e in events if e['available_at']<end and e['kind']=='OPEN' and e.get('order_id') in orders}
+    cohort=[t for t in trades if start<=t['opened_at'] and t['closed_at']<end and t.get('closed_available_at',t['closed_at'])<=end and t.get('reasons',{}).get('opportunity_id') in ids]
+    unresolved={o['reasons'].get('opportunity_id') for oid,o in orders.items() if outcomes.get(oid) not in {'CLOSED','EXPIRED','ORDER_REFUSED','INVALIDATED'}}
+    return {'eligible_opportunities':len(ids),'submitted_signals':len(orders),'filled_orders':len(filled),
+            'never_filled_observed':sum(outcomes.get(oid) in {'EXPIRED','ORDER_REFUSED','INVALIDATED'} and oid not in filled for oid in orders),
+            'pending_or_open_at_boundary':len(unresolved),
+            'closed_trades_in_opportunity_cohort':len(cohort),
+            'net_r_per_eligible_opportunity_observed':sum(t['net_r'] for t in cohort)/len(ids) if ids else None,
+            'net_cash_per_eligible_opportunity_observed':sum(t['net'] for t in cohort)/len(ids) if ids else None,
+            'definition':'Zone HTF initialement confirmée et alignée, ou range OPR complet. Absence de signal/remplissage =0; positions/ordres encore ouverts censurés et comptés; pas une preuve si censurés.'}
+
 def revision(root):
     p=subprocess.run(['git','rev-parse','HEAD'],cwd=root,text=True,capture_output=True)
     commit=p.stdout.strip() if p.returncode==0 else 'uncommitted'
@@ -128,20 +160,19 @@ def evaluate(root,experiment):
         for stress in [1,2,3]:
             c=deepcopy(cfg);c['models']=[model];c['risk']['slippage_ticks']*=stress
             ins=deepcopy(spec);ins['commission_per_unit']*=stress;ins['financing_per_unit_day']*=stress
-            eng=Engine(c,ins)
+            eng=Engine(c,ins);states={}
             for b in bars:
                 if b.time>=bounds[-1]:break
-                spread_scale=stress-1
-                if spread_scale:
-                    from dataclasses import replace
-                    b=replace(b,**{f'ask_{x}':getattr(b,f'ask_{x}')+(getattr(b,f'ask_{x}')-getattr(b,x))*spread_scale
-                                   for x in ('open','high','low','close')})
+                if stress!=1:b=stress_bar(b,stress)
                 eng.push(b,allow_entries=b.time>=bounds[0])
+                for boundary in bounds[1:]:
+                    if b.end<=boundary:states[boundary]={'available_at':b.end,'equity':eng.broker.equity,'position':deepcopy(eng.broker.position)}
             for label,start,end in windows:
-                trades=[t for t in eng.broker.trades if t['opened_at']>=start and t['closed_at']<end]
+                trades=[t for t in eng.broker.trades if t['opened_at']>=start and t['closed_at']<end and t.get('closed_available_at',t['closed_at'])<=end]
                 purged=[t for t in eng.broker.trades if t['opened_at']<end and t['closed_at']>=start and t not in trades]
                 curve=[p for p in eng.broker.curve if start<p['time']<=end]
-                initial=curve[0]['equity'] if curve else c['risk']['capital']
+                before=[p for p in eng.broker.curve if p['time']<=start]
+                initial=before[-1]['equity'] if before else c['risk']['capital']
                 ev=[e for e in eng.events if start<=e['available_at']<end]
                 counts={k:sum(e['kind']==k for e in ev) for k in ['ENTRY_PENDING','OPEN','EXPIRED','ORDER_REFUSED','AMBIGUOUS_BAR','GOLD_SIGNAL_REFUSED']}
                 cohort={e['order']['id'] for e in ev if e['kind']=='ENTRY_PENDING'}
@@ -150,15 +181,13 @@ def evaluate(root,experiment):
                 counts['not_filled_in_window']=len(cohort-fills)
                 counts['boundary_fills']=len(fills-cohort)
                 counts['signals_per_observed_day']=counts['ENTRY_PENDING']/max(1,len({p['time'].date() for p in curve}))
-                m=metrics(trades,curve,initial)
-                ci=m['daily_bootstrap_expectancy_ci95']
-                verdict='échec' if ci and ci[1]<=0 else ('non concluant' if len(trades)<100 or not ci or ci[0]<=0 else 'à confirmer prospectivement')
+                m=metrics(trades,curve,initial,seed=c['research']['seed'])
+                opportunities=opportunity_metrics(eng.events,eng.broker.trades,start,end)
+                verdict=evaluation_verdict(m,c['research']['min_trades'])
                 results.append({'model':model['id'],'version':model['version'],'policy':model['exit'],
                     'parameters':model,'cost_stress':stress,'period':[start,end],'window':label,
-                    'metrics':m,'orders':counts,'purged_boundary_trades':len(purged),'verdict':verdict,
-                    'open_position_at_dataset_end':eng.broker.position is not None,
-                    'open_position_details_at_dataset_end':eng.broker.position,
-                    'ending_equity_including_open_position':eng.broker.equity,
+                    'metrics':m,'orders':counts,'opportunities':opportunities,'purged_boundary_trades':len(purged),'verdict':verdict,
+                    'state_at_window_end':states.get(end),
                     'gold_profile':c['gold'],'effective_primitives':eng.effective_primitives,
                     'baseline':'cash USD 0% sans rémunération, exposition 0; cassure OPR simple via BASELINE-breakout si sélectionnée'})
             name=model['id']+f'-cost{stress}'

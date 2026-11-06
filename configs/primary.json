@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "execution": {
     "mode": "internal",
     "account_type": "simulation",
@@ -36,7 +36,7 @@
     {
       "id": "M1-H1-M5",
       "family": "M1",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -58,7 +58,7 @@
     {
       "id": "M1-H4-M15",
       "family": "M1",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "htf": 240,
       "ltf": 15,
       "exit": "E1",
@@ -80,7 +80,7 @@
     {
       "id": "M5A-80-range",
       "family": "M5A",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -101,7 +101,7 @@
     {
       "id": "M5B-80-range",
       "family": "M5B",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",

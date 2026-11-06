@@ -15,6 +15,8 @@ class Journal:
         CREATE TABLE IF NOT EXISTS inputs (time TEXT PRIMARY KEY, payload TEXT NOT NULL, allowed INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS events (seq INTEGER PRIMARY KEY, payload TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS health (seq INTEGER PRIMARY KEY AUTOINCREMENT, time TEXT NOT NULL, status TEXT NOT NULL, reason TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS control (id INTEGER PRIMARY KEY CHECK(id=1), halted INTEGER NOT NULL DEFAULT 0);
+        INSERT OR IGNORE INTO control VALUES(1,0);
         ''')
         value=canonical(identity)
         row=self.db.execute('SELECT value FROM identity WHERE id=1').fetchone()
@@ -50,3 +52,12 @@ class Journal:
                             (datetime.now(UTC).isoformat(),status,reason))
 
     def close(self): self.db.close()
+
+    def halted(self):
+        return bool(self.db.execute('SELECT halted FROM control WHERE id=1').fetchone()[0])
+
+    def latch_halt(self,reason):
+        with self.db:
+            self.db.execute('UPDATE control SET halted=1 WHERE id=1')
+            self.db.execute('INSERT INTO health(time,status,reason) VALUES(?,?,?)',
+                            (datetime.now(UTC).isoformat(),'HALTED',reason))

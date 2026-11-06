@@ -56,16 +56,29 @@ class Broker:
         leg={'time':at or b.end,'price':price,'qty':qty,'reason':reason,'gross':gross,'fee':cost}
         p['exits'].append(leg)
         self.emit('PARTIALLY_CLOSED' if p['remaining']>1e-8 else 'CLOSED',at or b.end,
-                  strategy=p['strategy'],order_id=p['id'],exit=leg,net_to_date=p['net'])
+                  available_at=b.end,strategy=p['strategy'],order_id=p['id'],exit=leg,net_to_date=p['net'])
         if p['remaining']<=1e-8:
-            p['closed_at']=at or b.end;p['net_r']=p['net']/p['risk_initial']
+            p['closed_at']=at or b.end;p['closed_available_at']=b.end;p['net_r']=p['net']/p['risk_initial']
             self.trades.append(p);self.position=None
+
+    def _take_partial(self,b,price,at=None):
+        p=self.position;s=self.spec
+        q=floor(p['qty']*self.cfg['partial_fraction']/s['qty_step']+1e-9)*s['qty_step']
+        if q>=s['min_qty'] and p['remaining']-q>=s['min_qty']:
+            self._close(b,price,q,'PARTIAL_2R',at=at)
+            p['stop']=p['entry'];p['partial_done']=True
+            self.emit('BREAK_EVEN_ARMED',at or b.end,available_at=b.end,strategy=p['strategy'],stop=p['stop'],effective='bougie suivante')
+        else:
+            p['partial_done']=True
+            self.emit('PARTIAL_REFUSED',b.end,strategy=p['strategy'],reason='Quantité minimale')
 
     def _manage(self,b):
         p=self.position
         if not p:
             return
         d=p['direction'];s=self.spec;slip=self.cfg['slippage_ticks']*s['tick_size']
+        stop_for_bar=p['stop']
+        partial=p['entry']+d*2*p['unit_risk']
         o,h,l,c=(b.open,b.high,b.low,b.close) if d==1 else (b.ask_open,b.ask_high,b.ask_low,b.ask_close)
         p['mae']=max(p['mae'],max(0,(p['entry']-l) if d==1 else (h-p['entry']))/p['unit_risk'])
         p['mfe']=max(p['mfe'],max(0,(h-p['entry']) if d==1 else (p['entry']-l))/p['unit_risk'])
@@ -75,37 +88,45 @@ class Broker:
             self.cash-=fee;p['net']-=fee;p['fees']+=fee;self.fees+=fee
             p['last_funding_day']=b.time.date()
             self.emit('FINANCING',b.time,available_at=b.end,strategy=p['strategy'],cost=fee,days=days)
-        stop_hit=l<=p['stop'] if d==1 else h>=p['stop']
+        if p['entry_bar']<b.time or p['kind']=='market':
+            if (o<=p['stop'] if d==1 else o>=p['stop']):
+                self._close(b,o-d*slip,p['remaining'],'STOP',at=b.time);return
+            if p['policy']=='E4' and not p['partial_done'] and (o>=partial if d==1 else o<=partial):
+                self._take_partial(b,partial-d*slip,at=b.time)
+            if (o>=p['target'] if d==1 else o<=p['target']):
+                self._close(b,p['target']-d*slip,p['remaining'],'TARGET_OPEN',at=b.time);return
+        stop_hit=l<=stop_for_bar if d==1 else h>=stop_for_bar
         target_hit=h>=p['target'] if d==1 else l<=p['target']
-        partial=p['entry']+d*2*p['unit_risk']
         partial_hit=(h>=partial if d==1 else l<=partial) and p['policy']=='E4' and not p['partial_done']
         if stop_hit and (target_hit or partial_hit):
             self.ambiguous+=1
-            self.emit('AMBIGUOUS_BAR',b.end,strategy=p['strategy'],convention='stop prioritaire')
+            net=lambda price:(p['net']+(price-p['entry'])*d*p['remaining']*s['point_value']-p['remaining']*s['commission_per_unit'])/p['risk_initial']
+            low_bound=net(stop_for_bar-d*slip);upper_bound=net(p['target']-d*slip) if target_hit else low_bound
+            if partial_hit and not target_hit:
+                q=floor(p['qty']*self.cfg['partial_fraction']/s['qty_step']+1e-9)*s['qty_step']
+                if q>=s['min_qty'] and p['remaining']-q>=s['min_qty']:
+                    gross=((partial-d*slip-p['entry'])*d*q+(stop_for_bar-d*slip-p['entry'])*d*(p['remaining']-q))*s['point_value']
+                    upper_bound=(p['net']+gross-p['remaining']*s['commission_per_unit'])/p['risk_initial']
+            self.emit('AMBIGUOUS_BAR',b.end,strategy=p['strategy'],order_id=p['id'],convention='stop prioritaire',
+                      net_r_stop_target_bounds=[low_bound,upper_bound])
         if stop_hit:
             # Gaps are executed at the worse opening quote, then slippage.
-            px=min(o,p['stop'])-slip if d==1 else max(o,p['stop'])+slip
+            px=min(o,stop_for_bar)-slip if d==1 else max(o,stop_for_bar)+slip
             self._close(b,px,p['remaining'],'STOP');return
         # A touched limit may have filled after the high/low: no target profit on its entry bar.
         if p['entry_bar']==b.time and p['kind']=='limit':
             if target_hit or partial_hit:
                 self.ambiguous+=1
-                self.emit('AMBIGUOUS_BAR',b.end,strategy=p['strategy'],convention='cible ignorée sur bougie entrée limite')
+                self.emit('AMBIGUOUS_BAR',b.end,strategy=p['strategy'],order_id=p['id'],convention='cible ignorée sur bougie entrée limite')
             return
         if partial_hit:
-            q=floor(p['qty']*self.cfg['partial_fraction']/s['qty_step']+1e-9)*s['qty_step']
-            if q>=s['min_qty'] and p['remaining']-q>=s['min_qty']:
-                self._close(b,partial-d*slip,q,'PARTIAL_2R')
-                p['stop']=p['entry'];p['partial_done']=True
-                self.emit('BREAK_EVEN_ARMED',b.end,strategy=p['strategy'],stop=p['stop'],effective='bougie suivante')
-            else:
-                p['partial_done']=True
-                self.emit('PARTIAL_REFUSED',b.end,strategy=p['strategy'],reason='Quantité minimale')
+            self._take_partial(b,partial-d*slip)
         if self.position and target_hit:
             self._close(b,p['target']-d*slip,p['remaining'],'TARGET')
 
     def on_bar(self,b,allow_entries=True):
         s=self.spec
+        occupied_at_open=self.position is not None
         if self.day!=b.time.date():
             self.day=b.time.date();self.day_equity=self.equity;self.daily_locked=False
         self._manage(b)
@@ -126,6 +147,7 @@ class Broker:
             reason=None
             if not allow_entries: reason='Incident ou données périmées'
             elif self.daily_locked: reason='Limite de perte quotidienne'
+            elif occupied_at_open: reason='Position déjà ouverte au début de la bougie; sortie intrabougie non anticipable'
             elif self.position or filled_this_bar: reason='Une position simultanée / priorité déterministe'
             if reason:
                 self.emit('ORDER_REFUSED',b.end,strategy=o.strategy,order_id=o.id,reason=reason);continue

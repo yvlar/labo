@@ -9,6 +9,13 @@ class Model:
     def __init__(self,cfg,engine):
         self.cfg,self.e=cfg,engine;self.name=cfg['id'];self.used=set();self.context=None
         self.day=None;self.range_bars=[];self.opr=None;self.phase=None;self.sent=False
+        self.opportunities=set();self.opportunity_id=None
+
+    def opportunity(self,b,identifier,**details):
+        if identifier not in self.opportunities:
+            self.opportunities.add(identifier)
+            self.e.emit('OPPORTUNITY',b.end,strategy=self.name,opportunity_id=identifier,**details)
+        self.opportunity_id=identifier
 
     def note(self,b,reason,**details):
         self.e.emit('DECISION',b.end,strategy=self.name,reason=reason,**details)
@@ -19,12 +26,18 @@ class Model:
         if not gold_check['allowed']:
             self.e.emit('GOLD_SIGNAL_REFUSED',b.end,strategy=self.name,reason=gold_check['reason'],gold_check=gold_check)
             return False
-        reasons=reasons|{'gold_context':self.e.gold.snapshot()['context'],'gold_signal_check':gold_check}
-        if d*(entry-stop)<tick or d*(target-entry)<tick:
-            self.note(b,'Stop/cible structurels indisponibles ou invalides');return False
+        opportunity_id=reasons.get('htf_zone') or reasons.get('zone_id') or self.opportunity_id
+        reasons=reasons|{'gold_context':self.e.gold.snapshot()['context'],'gold_signal_check':gold_check,
+                         'opportunity_id':opportunity_id}
+        if d*(entry-stop)<tick:
+            self.note(b,'Stop indisponible ou invalide');return False
         policy=self.cfg['exit']
         if policy in ('E2','E3'):
             target=entry+d*abs(entry-stop)*(2 if policy=='E2' else 3)
+        if d*(target-entry)<tick:
+            self.note(b,'Cible structurelle indisponible ou invalide');return False
+        if self.cfg.get('min_structural_r') is not None and d*(target-entry)/abs(entry-stop)<=self.cfg['min_structural_r']:
+            self.note(b,'Seuil structurel commun de comparaison non satisfait');return False
         if policy=='E5' and d*(target-entry)/abs(entry-stop)<2.5:
             self.note(b,'Ratio structurel inférieur à 2,5R');return False
         if policy=='E4' and d*(target-entry)/abs(entry-stop)<=2:
@@ -45,27 +58,33 @@ class Model:
         family=self.cfg['family']
         if family in ('M4A','M4B','M5A','M5B','BASELINE'):
             return self.opening(b,events)
+        h=self.e.structures[self.cfg['htf']]
+        desired_trend=-h.trend if self.cfg.get('context_mode','continuation')=='reversal' else h.trend
+        for z in h.zones:
+            if z.zone_kind==self.cfg.get('zone_kind','pivot') and not z.invalid and z.direction==desired_trend and z.available_at<=b.end:
+                self.opportunity(b,z.id,zone_id=z.id,definition='zone HTF confirmée et alignée, même si aucun ordre ne suit')
         return self.supply(b,events)
 
     def supply(self,b,events):
         h=self.e.structures[self.cfg['htf']];l=self.e.structures[self.cfg['ltf']]
         family=self.cfg['family'];tick=self.e.spec['tick_size']
+        desired_trend=-h.trend if self.cfg.get('context_mode','continuation')=='reversal' else h.trend
         if self.context:
             z=self.context['zone']
-            if z.invalid or h.trend!=self.context['direction'] or (b.end-self.context['touch']).total_seconds()/60>self.cfg['setup_ttl_minutes']:
+            if z.invalid or desired_trend!=self.context['direction'] or (b.end-self.context['touch']).total_seconds()/60>self.cfg['setup_ttl_minutes']:
                 self.e.emit('INVALIDATED',b.end,strategy=self.name,zone_id=z.id,reason='Zone invalide ou attente expirée')
                 self.context=None
         if not self.context:
             zones=[z for z in h.zones if z.zone_kind==self.cfg.get('zone_kind','pivot') and not z.invalid and z.id not in self.used and z.available_at<=b.time
-                   and z.direction==h.trend]
-            if family=='M2':
+                   and z.direction==desired_trend]
+            if family in ('M2','SD_DIRECT'):
                 # Selection occurs once at parent activation, never after seeing which subzone held.
                 parents=[z for z in h.zones if z.zone_kind==self.cfg.get('zone_kind','pivot') and not z.invalid and z.id not in self.used
                          and z.direction==h.trend and z.available_at==b.end]
                 for z in parents:
                     self.used.add(z.id)
                     candidates=[z]
-                    for tf in self.cfg.get('refinement_tfs',[self.cfg['ltf']]):
+                    for tf in ([] if family=='SD_DIRECT' else self.cfg.get('refinement_tfs',[self.cfg['ltf']])):
                         children=[q for q in self.e.structures[tf].zones if q.zone_kind==self.cfg.get('zone_kind','pivot')
                             and not q.invalid and q.direction==z.direction and q.available_at<=b.end
                             and any(p.low<=q.low<q.high<=p.high and p.origin<=q.origin for p in candidates)]
@@ -76,8 +95,10 @@ class Model:
                     c=min(children,key=lambda c:(c.low,c.id)) if z.direction==1 else max(children,key=lambda c:(c.high,c.id))
                     entry=c.high+(b.ask_close-b.close) if z.direction==1 else c.low
                     stop=c.low-tick if z.direction==1 else c.high+tick+(b.ask_close-b.close)
-                    self.order(b,z.direction,entry,stop,self.target(z.direction,entry),'limit',
-                               {'htf_zone':z.id,'entry_zone':c.id,'selection':'extrême à activation HTF'})
+                    parent_entry=z.high+(b.ask_close-b.close) if z.direction==1 else z.low
+                    self.order(b,z.direction,entry,stop,self.target(z.direction,parent_entry),'limit',
+                               {'htf_zone':z.id,'entry_zone':c.id,'target_reference':'parent HTF',
+                                'selection':'parent direct' if family=='SD_DIRECT' else 'extrême à activation HTF'})
                 if not parents:self.note(b,'Attente activation HTF pour figer la sous-zone extrême')
                 return
             touched=[z for z in zones if b.low<=z.high and b.high>=z.low]
@@ -103,20 +124,25 @@ class Model:
         if self.cfg.get('require_sweep') and not swept:
             self.note(b,'Filtre sweep au retest non satisfait',zone_id=z.id);self.context=None;return
         current_zones=[q for q in l.zones if q.zone_kind==self.cfg.get('zone_kind','pivot') and q.direction==d and q.available_at==b.end and not q.invalid]
-        fvg=any(f['available_at']==b.end and f['direction']==d for f in l.fvgs)
+        anchor=next((p for p in reversed(l.pivots) if p.side==-d and p.available_at<=b.end),None)
+        impulse=[x for x in l.bars if anchor and x.time>=anchor.pivot_time and x.end<=b.end]
+        impulse_fvgs=[f for f in l.fvgs if anchor and f['direction']==d and
+                      f['origin']>=anchor.pivot_time and f['available_at']<=b.end and not f['invalid'] and f['fill']<1]
+        fvg=bool(impulse_fvgs)
         if family=='M3':
             if fvg:
                 self.note(b,'Branche OTE exclue : FVG présent');self.context=None;return
             # Freeze impulse anchors at CHoCH, using the latest confirmed opposite pivot.
-            p=next((p for p in reversed(l.pivots) if p.side==-d and p.available_at<=b.end),None)
-            end=b.high if d==1 else b.low
-            if not p or (end-p.price)*d<=0:
+            p=anchor
+            end=(max(x.high for x in impulse) if d==1 else min(x.low for x in impulse)) if impulse else None
+            if not p or end is None or (end-p.price)*d<=0:
                 self.note(b,'Ancrage causal OTE absent');self.context=None;return
             entry=fibonacci(p.price,end,.702)
             if d==1:entry+=b.ask_close-b.close
             stop=p.price-d*tick+(b.ask_close-b.close if d==-1 else 0)
             reasons={'htf_zone':z.id,'choch':changes[0]['pivot_id'],'sweep_at_retest':swept,
-                     'anchors':[p.price,end],'depth':.702,'no_fvg':True}
+                     'anchors':[p.price,end],'anchor_pivot_id':p.id,'impulse_end':b.end,
+                     'depth':.702,'no_fvg':True,'branch_selected_at':b.end}
         else:
             if self.cfg.get('require_fvg') and not fvg:
                 self.note(b,'Branche Supply/Demand avec FVG non satisfaite');self.context=None;return
@@ -126,7 +152,8 @@ class Model:
             entry=q.high+(b.ask_close-b.close) if d==1 else q.low
             stop=q.low-tick if d==1 else q.high+tick+(b.ask_close-b.close)
             reasons={'htf_zone':z.id,'entry_zone':q.id,'choch':changes[0]['pivot_id'],
-                     'sweep_at_retest':swept,'fvg_confluence':fvg,'direction':'continuation HTF'}
+                     'sweep_at_retest':swept,'fvg_confluence':fvg,'fvg_ids':[f['id'] for f in impulse_fvgs],
+                     'direction':'continuation HTF'}
         self.order(b,d,entry,stop,self.target(d,entry),'limit',reasons)
         self.context=None
 
@@ -150,6 +177,7 @@ class Model:
                     self.note(b,'Range incomplet : séance désactivée');return
                 self.opr={'high':max(x.high for x in bars),'low':min(x.low for x in bars),
                           'available_at':b.end,'start':bars[0].time}
+                self.opportunity(b,f'OPR:{n}:{self.day.isoformat()}',definition='range complet partagé entre variantes; ordre facultatif')
                 self.e.emit('OPR_READY',b.end,strategy=self.name,**self.opr)
             return
         if not self.opr or elapsed<n or self.sent:
@@ -170,7 +198,8 @@ class Model:
             recent=self.e.structures[1].bars[-3:]
             crossing=bool(recent and (recent[0].close<=hi if d==1 else recent[0].close>=lo))
             impulse=len(recent)==3 and abs(recent[1].close-recent[1].open)/max(recent[1].high-recent[1].low,1e-12)>=self.cfg['confirmation_body_min']
-            if not d or not any(f['direction']==d for f in fs) or not crossing or not impulse:
+            third_strong=body+1e-12>=self.cfg['confirmation_body_min'] and (b.close-b.open)*d>0
+            if not d or not any(f['direction']==d for f in fs) or not crossing or not impulse or not third_strong:
                 self.note(b,'Attente cassure avec FVG et déplacement confirmé');return
             if self.cfg.get('require_context') and bias!=d:
                 self.note(b,'Contexte HTF non aligné');return
@@ -242,14 +271,17 @@ class Model:
                 c['choch_at']=b.end
             base=bars[-4:-1];hi=max(x.high for x in base);lo=min(x.low for x in base)
             if c.get('choch_at') and b.end>c['choch_at'] and not c.get('broken'):
-                if all(abs(x.close-x.open)/max(x.high-x.low,1e-12)<=.5 for x in base) and (cur.close>hi if d==1 else cur.close<lo):
+                if base[0].time>=c['choch_at'] and all(abs(x.close-x.open)/max(x.high-x.low,1e-12)<=.5 for x in base) and (cur.close>hi if d==1 else cur.close<lo):
                     c['broken']={'level':hi if d==1 else lo,'time':b.end}
             broken=c.get('broken')
             valid=bool(broken and b.end>broken['time'] and cur.low<=broken['level']<=cur.high and
+                       (cur.close>broken['level'] if d==1 else cur.close<broken['level']) and
                        (cur.close-cur.open)*d>0 and body>=.6)
         if not valid:
             self.note(b,'Confirmation expérimentale absente',variant=family);return
         entry=b.ask_close if d==1 else b.close
         stop=min(a.low,cur.low)-self.e.spec['tick_size'] if d==1 else max(a.ask_high,cur.ask_high)+self.e.spec['tick_size']
-        self.order(b,d,entry,stop,self.target(d,entry),'market',{'zone_id':c['zone'].id,'variant':family,'continuation':True})
+        self.order(b,d,entry,stop,self.target(d,entry),'market',{'zone_id':c['zone'].id,'variant':family,
+                    'continuation':self.cfg.get('context_mode','continuation')=='continuation',
+                    'context_mode':self.cfg.get('context_mode','continuation')})
         self.context=None

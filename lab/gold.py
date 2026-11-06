@@ -106,6 +106,8 @@ def contract_status(spec):
     if not spec.get('market_sessions_source'):blockers.append('Provenance des horaires manquante')
     return {'symbol':'XAUUSD','status':'À CONFIGURER' if blockers else 'SPÉCIFICATIONS RENSEIGNÉES',
         'blockers':blockers,'product_type':spec.get('product_type'),
+        'provider':spec.get('provider'),'provider_symbol':spec.get('provider_symbol'),
+        'account_currency':spec.get('account_currency'),
         'price_unit':'USD par once troy','quantity_unit':'contrat',
         'ounces_per_contract':spec.get('contract_size'),
         'usd_per_tick_per_contract':spec.get('tick_size',0)*spec.get('point_value',0),
