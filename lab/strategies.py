@@ -2,12 +2,13 @@ from datetime import timedelta, time
 from zoneinfo import ZoneInfo
 from .execution import Intent
 from .primitives import fibonacci
+from copy import deepcopy
 
 NY=ZoneInfo('America/New_York')
 
 class Model:
     def __init__(self,cfg,engine):
-        self.cfg,self.e=cfg,engine;self.name=cfg['id'];self.used=set();self.context=None
+        self.cfg,self.e=deepcopy(cfg),engine;self.name=cfg['id'];self.used=set();self.context=None
         self.day=None;self.range_bars=[];self.opr=None;self.phase=None;self.sent=False
         self.opportunities=set();self.opportunity_id=None
 

@@ -20,6 +20,15 @@ def variant(family):
 
 
 class AuditRegressions(unittest.TestCase):
+    def test_caller_cannot_mutate_frozen_engine_parameters(self):
+        config=cfg();instrument=spec();e=Engine(config,instrument)
+        config['risk']['slippage_ticks']=999
+        config['models'][0]['stop_variant']='confirmation'
+        instrument['tick_size']=1
+        self.assertEqual(e.broker.cfg['slippage_ticks'],1)
+        self.assertEqual(e.models[0].cfg['stop_variant'],'range')
+        self.assertEqual(e.broker.spec['tick_size'],.01)
+
     def test_gap_over_partial_and_target_still_respects_quantities(self):
         risk=deepcopy(cfg()['risk']);risk['slippage_ticks']=0
         broker=Broker(risk,spec()|{'commission_per_unit':0},lambda *a,**k:None)
