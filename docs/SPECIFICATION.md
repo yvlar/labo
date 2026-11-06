@@ -1,6 +1,8 @@
-# Spécifications déterministes v0.1.0
+# Spécifications déterministes v0.2.0
 
 Périmètre fixé au 2026-11-06 : XAU/USD exclusivement. `symbol` doit être exactement `XAUUSD`. Le contrôle commun refuse les autres symboles avant import, initialisation du simulateur, préenregistrement, évaluation ou lancement du flux. Les archives d’autres instruments sont conservées mais ne sont pas proposées dans l’interface. Les spécifications du fournisseur pour XAU/USD restent obligatoires ; cette restriction ne calibre aucun seuil et ne valide aucune performance.
+
+Le profil Gold v0.2.0 est spécifié dans `GOLD.md`. Il exprime les distances en ticks fournisseur, vérifie les unités du contrat et ajoute les protections d’entrée préenregistrées. Le contexte Gold de la nouvelle clôture est calculé après le traitement des ordres de cette bougie ; le contrôle de remplissage utilise donc exclusivement l’ATR précédent et le spread à l’ouverture.
 
 ## Temps et disponibilité
 

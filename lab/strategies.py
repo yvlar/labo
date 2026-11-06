@@ -15,6 +15,11 @@ class Model:
 
     def order(self,b,d,entry,stop,target,kind,reasons):
         spec=self.e.spec;tick=spec['tick_size']
+        gold_check=self.e.gold.guard(b.end,b.ask_close-b.close,entry,stop)
+        if not gold_check['allowed']:
+            self.e.emit('GOLD_SIGNAL_REFUSED',b.end,strategy=self.name,reason=gold_check['reason'],gold_check=gold_check)
+            return False
+        reasons=reasons|{'gold_context':self.e.gold.snapshot()['context'],'gold_signal_check':gold_check}
         if d*(entry-stop)<tick or d*(target-entry)<tick:
             self.note(b,'Stop/cible structurels indisponibles ou invalides');return False
         policy=self.cfg['exit']
@@ -151,7 +156,7 @@ class Model:
             self.note(b,'Attente range OPR complet' if not self.opr else 'Occasion quotidienne déjà soumise');return
         if elapsed>=self.cfg['window_minutes']:
             self.note(b,'Fenêtre OPR terminée');return
-        hi,lo=self.opr['high'],self.opr['low'];m=self.e.cfg['primitives']['break_margin']
+        hi,lo=self.opr['high'],self.opr['low'];m=self.e.effective_primitives['break_margin']
         body=abs(b.close-b.open)/max(b.high-b.low,1e-12)
         bias=self.e.structures[self.cfg['htf']].trend
         if family=='BASELINE':

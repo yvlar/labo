@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "execution": {
     "mode": "internal",
     "account_type": "simulation",
@@ -30,13 +30,13 @@
     "optimization": "none",
     "primary_metric": "net_expectancy_r",
     "min_trades": 100,
-    "bootstrap": "journ\u00e9es, 1000 r\u00e9plications"
+    "bootstrap": "journées, 1000 réplications"
   },
   "models": [
     {
       "id": "M1-H1-M5",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -58,7 +58,7 @@
     {
       "id": "M1-H4-M15",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 240,
       "ltf": 15,
       "exit": "E1",
@@ -80,7 +80,7 @@
     {
       "id": "M5A-80-range",
       "family": "M5A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -101,7 +101,7 @@
     {
       "id": "M5B-80-range",
       "family": "M5B",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -119,5 +119,28 @@
         "R25"
       ]
     }
-  ]
+  ],
+  "gold": {
+    "version": "gold-0.2.0",
+    "atr_period": 14,
+    "regime_lookback": 60,
+    "regime_low": 0.75,
+    "regime_high": 1.5,
+    "break_margin_ticks": 1,
+    "equal_tolerance_ticks": 5,
+    "guards": {
+      "enabled": true,
+      "require_atr": true,
+      "max_spread_to_atr": 0.3,
+      "max_spread_to_stop": 0.2,
+      "min_stop_ticks": 2,
+      "close_buffer_minutes": 5
+    },
+    "usd_calendar": {
+      "enabled": false,
+      "before_minutes": 15,
+      "after_minutes": 15,
+      "events": []
+    }
+  }
 }

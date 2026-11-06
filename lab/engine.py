@@ -4,14 +4,16 @@ from .data import canonical, digest, check, Resampler, validate_instrument
 from .primitives import Structure
 from .execution import Broker
 from .strategies import Model
+from .gold import GoldDesk, validate_profile
 
 FAMILIES={'M1','M2','M3','M4A','M4B','M5A','M5B','M6A','M6B','M6C','BASELINE'}
 
 def validate_config(cfg):
     if cfg.get('execution')!={'mode':'internal','account_type':'simulation','endpoint':None}:
         raise ValueError('Seul le simulateur interne est autorisé; comptes/endpoints externes refusés')
-    if set(cfg)-{'version','execution','risk','primitives','models','research'}:
+    if set(cfg)-{'version','execution','risk','primitives','models','research','gold'}:
         raise ValueError('Clés de configuration inconnues')
+    validate_profile(cfg.get('gold'))
     r=cfg['risk']
     for k,v in r.items():
         if isinstance(v,(int,float)) and (not math.isfinite(v) or v<0):
@@ -45,10 +47,14 @@ class Engine:
         validate_instrument(spec)
         self.cfg,self.spec=deepcopy(cfg),deepcopy(spec)
         self.events=[];self.bars=[];self.last=None
+        self.gold=GoldDesk(cfg['gold'],spec,self.emit)
+        self.effective_primitives=deepcopy(cfg['primitives'])
+        self.effective_primitives['break_margin']=cfg['gold']['break_margin_ticks']*spec['tick_size']
+        self.effective_primitives['equal_tolerance']=cfg['gold']['equal_tolerance_ticks']*spec['tick_size']
         periods={1}|{m[k] for m in cfg['models'] for k in ('htf','ltf')}|{n for m in cfg['models'] for n in m.get('refinement_tfs',[])}
         self.resamplers={n:Resampler(n) for n in periods if n>1}
-        self.structures={n:Structure(n,cfg['primitives']) for n in periods}
-        self.broker=Broker(cfg['risk'],spec,self.emit)
+        self.structures={n:Structure(n,self.effective_primitives) for n in periods}
+        self.broker=Broker(cfg['risk'],spec,self.emit,entry_guard=self.gold.fill_guard)
         # Stable lexicographic priority in portfolio mode; individual runs use one model.
         self.models=[Model(m,self) for m in sorted(cfg['models'],key=lambda m:m['id'])]
 
@@ -66,6 +72,7 @@ class Engine:
         start=len(self.events)
         gap=self.last and b.time!=self.last.end
         if gap:
+            self.gold.gap()
             self.broker.cancel(b.end,'Trou de données : nouvelle confirmation requise')
             for m in self.models:
                 m.context=None;m.phase=None
@@ -82,6 +89,7 @@ class Engine:
             else:active.append(o)
         self.broker.orders=active
         self.broker.on_bar(b,allow_entries and not gap)
+        self.gold.update(b)
         self.bars.append(b)
         events=[]
         for n in sorted(self.structures,reverse=True):
@@ -105,4 +113,5 @@ class Engine:
                 'instrument':self.spec,'last_bar':self.last.record() if self.last else None,
                 'cash':self.broker.cash,'equity':self.broker.equity,'drawdown':self.broker.drawdown,
                 'open_position':self.broker.position,'orders':self.broker.orders,
-                'trades':self.broker.trades,'ambiguous_bars':self.broker.ambiguous,'fees':self.broker.fees}
+                'trades':self.broker.trades,'ambiguous_bars':self.broker.ambiguous,'fees':self.broker.fees,
+                'gold':self.gold.snapshot(),'effective_primitives':self.effective_primitives}

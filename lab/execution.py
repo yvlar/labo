@@ -23,9 +23,10 @@ def rounded(price,tick,up):
     return (ceil(price/tick-1e-9) if up else floor(price/tick+1e-9))*tick
 
 class Broker:
-    def __init__(self,cfg,instrument,emit):
+    def __init__(self,cfg,instrument,emit,entry_guard=None):
         validate_instrument(instrument)
         self.cfg,self.spec,self.emit=cfg,instrument,emit
+        self.entry_guard=entry_guard
         self.cash=cfg['capital'];self.position=None;self.orders=[];self.trades=[]
         self.equity=self.cash;self.peak=self.cash;self.drawdown=0
         self.day=None;self.day_equity=self.cash;self.daily_locked=False
@@ -143,6 +144,10 @@ class Broker:
             unit=(px-stop)*d
             if unit<=0 or (target-px)*d<=0:
                 self.emit('ORDER_REFUSED',b.end,strategy=o.strategy,order_id=o.id,reason='Gap / niveaux invalides');continue
+            gold_check=self.entry_guard(b,o,px) if self.entry_guard else None
+            if gold_check and not gold_check['allowed']:
+                self.emit('ORDER_REFUSED',b.end,strategy=o.strategy,order_id=o.id,
+                          reason=gold_check['reason'],gold_check=gold_check);continue
             budget=max(0,self.cash)*min(self.cfg['risk_per_trade'],self.cfg['max_open_risk'])
             unit_cost=unit*s['point_value']+2*s['commission_per_unit']+2*slip*s['point_value']
             qty=floor(budget/unit_cost/s['qty_step']+1e-9)*s['qty_step']
@@ -155,7 +160,7 @@ class Broker:
                 'unit_risk':unit,'risk_initial':unit*qty*s['point_value'],'net':-fee,'fees':fee,
                 'opened_at':b.time if o.kind=='market' else b.end,'entry_bar':b.time,
                 'policy':o.policy,'partial_done':False,'exits':[],'mae':0.,'mfe':0.,
-                'last_funding_day':b.time.date(),'reasons':o.reasons}
+                'last_funding_day':b.time.date(),'reasons':o.reasons,'gold_fill_check':gold_check}
             filled_this_bar=True
             self.emit('OPEN',b.end,strategy=o.strategy,order_id=o.id,fill=px,qty=qty,
                       fill_time=b.time if o.kind=='market' else None,risk=self.position['risk_initial'],fee=fee)

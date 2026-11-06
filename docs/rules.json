@@ -810,7 +810,7 @@
     "variants": [
       "toutes"
     ],
-    "divergences": "Tick/dimension des seuils doivent être adaptés par nouvel enregistrement, jamais sur test final."
+    "divergences": "Tick/dimension des seuils doivent être adaptés par nouvel enregistrement, jamais sur test final. À partir de v0.2.0, H11 remplace les distances absolues par des multiples du tick fournisseur."
   },
   {
     "rule_id": "H02",
@@ -902,5 +902,93 @@
       "BASELINE"
     ],
     "divergences": "Aucune divergence tranchée sans variante."
+  },
+  {
+    "rule_id": "H11",
+    "sources": [],
+    "summary": "Contrat XAU/USD explicite en onces troy et marges en ticks fournisseur.",
+    "status": "hypothèse",
+    "mathematical_definition": "base=XAU; quote=USD; prix=USD/once troy; quantité=contrat; point_value=contract_size; tick_value=tick_size*contract_size. Marge cassure=1tick, égalité=5ticks.",
+    "parameters": {
+      "break_ticks": 1,
+      "equal_ticks": 5
+    },
+    "available_at": "Spécifications figées à import et préenregistrement",
+    "variants": [
+      "profil Gold v0.2.0"
+    ],
+    "divergences": "Règle du projet, sans attribution à OlinVest. Protections actives dans primary/variants ; mode observation dans gold-observation. Aucun réglage sur test final."
+  },
+  {
+    "rule_id": "H12",
+    "sources": [],
+    "summary": "ATR et régimes de volatilité causaux du Gold, sans choix automatique de stratégie.",
+    "status": "hypothèse",
+    "mathematical_definition": "TR=max(high-low,abs(high-close_prev),abs(low-close_prev)); ATR=SMA14 des TR M1 contigus. Régime compare ATR à médiane des 60 ATR antérieurs : faible<0.75, élevé>1.5.",
+    "parameters": {
+      "ATR": 14,
+      "reference": 60,
+      "low": 0.75,
+      "high": 1.5
+    },
+    "available_at": "Après clôture M1 ; à exécution, ATR disponible à la clôture précédente seulement",
+    "variants": [
+      "profil Gold v0.2.0"
+    ],
+    "divergences": "Règle du projet, sans attribution à OlinVest. Protections actives dans primary/variants ; mode observation dans gold-observation. Aucun réglage sur test final."
+  },
+  {
+    "rule_id": "H13",
+    "sources": [],
+    "summary": "Protection contre un coût de spread excessif et des stops trop proches.",
+    "status": "hypothèse",
+    "mathematical_definition": "ATR requis; spread/ATR<=0.30; spread/distance_stop<=0.20; distance_stop>=2ticks. Vérification à décision puis à ouverture disponible ; aucune donnée high/low future dans le contrôle du spread.",
+    "parameters": {
+      "max_spread_atr": 0.3,
+      "max_spread_stop": 0.2,
+      "min_stop_ticks": 2
+    },
+    "available_at": "Clôture de décision puis prochaine ouverture ; les refus sont journalisés",
+    "variants": [
+      "profil Gold v0.2.0"
+    ],
+    "divergences": "Règle du projet, sans attribution à OlinVest. Protections actives dans primary/variants ; mode observation dans gold-observation. Aucun réglage sur test final."
+  },
+  {
+    "rule_id": "H14",
+    "sources": [],
+    "summary": "Sessions de contexte Gold et calendrier fournisseur distincts.",
+    "status": "hypothèse",
+    "mathematical_definition": "Asie09–17 Tokyo; Londres08–16:30 Londres; NY08–17 NY. Extrêmes publiés seulement après fin et toutes M1 présentes. Nouvelles entrées bloquées hors horaires fournisseur ou à<=5min de fermeture connue.",
+    "parameters": {
+      "close_buffer_minutes": 5,
+      "session_priority": [
+        "NEW_YORK",
+        "LONDRES",
+        "ASIE"
+      ]
+    },
+    "available_at": "À clôture pour contexte et extrêmes ; calendrier public connu avant chaque entrée",
+    "variants": [
+      "profil Gold v0.2.0"
+    ],
+    "divergences": "Règle du projet, sans attribution à OlinVest. Protections actives dans primary/variants ; mode observation dans gold-observation. Aucun réglage sur test final."
+  },
+  {
+    "rule_id": "H15",
+    "sources": [],
+    "summary": "Calendrier USD optionnel et daté, sans résultat macroéconomique futur.",
+    "status": "hypothèse",
+    "mathematical_definition": "Fenêtre de refus15min avant/après scheduled_at uniquement si available_at<=instant. Chaque annonce porte source et identifiant; pas de récupération automatique ni valeur publiée utilisée.",
+    "parameters": {
+      "before_minutes": 15,
+      "after_minutes": 15,
+      "enabled_default": false
+    },
+    "available_at": "Seulement après available_at du programme public connu",
+    "variants": [
+      "profil Gold v0.2.0"
+    ],
+    "divergences": "Règle du projet, sans attribution à OlinVest. Protections actives dans primary/variants ; mode observation dans gold-observation. Aucun réglage sur test final."
   }
 ]

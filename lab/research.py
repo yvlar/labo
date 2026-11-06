@@ -20,6 +20,7 @@ def metrics(trades,curve,capital,seed=17):
     rs=[t['net_r'] for t in trades];pnls=[t['net'] for t in trades]
     pos=sum(x for x in pnls if x>0);neg=-sum(x for x in pnls if x<0)
     peak=capital;dd=0;worst=streak=0;days={};by_session={};by_month={}
+    by_gold_session={};by_gold_regime={};spread_ratios=[]
     recovery=None;underwater=None;longest=0
     from zoneinfo import ZoneInfo
     for t in trades:
@@ -29,6 +30,13 @@ def metrics(trades,curve,capital,seed=17):
         session='New York' if 9<=hour<16 else ('Londres' if 3<=hour<9 else 'Autres')
         by_session[session]=by_session.get(session,0)+t['net']
         month=day[:7];by_month[month]=by_month.get(month,0)+t['net']
+        context=t.get('reasons',{}).get('gold_context') or {}
+        if context:
+            session=context['session_bucket'];regime=context['volatility_regime']
+            for buckets,key in ((by_gold_session,session),(by_gold_regime,regime)):
+                bucket=buckets.setdefault(key,{'trades':0,'net':0.})
+                bucket['trades']+=1;bucket['net']+=t['net']
+            if context['spread_to_atr'] is not None:spread_ratios.append(context['spread_to_atr'])
     for i,p in enumerate(curve):
         peak=max(peak,p['equity']);dd=max(dd,peak-p['equity'])
         if p['equity']<peak and underwater is None:underwater=i
@@ -59,6 +67,8 @@ def metrics(trades,curve,capital,seed=17):
         'exposure':sum(p['exposed'] for p in curve)/len(curve) if curve else 0,
         'daily_bootstrap_expectancy_ci95':ci,'days':len(days),'by_session_net':by_session,
         'by_month_net':by_month,'largest_positive_day_share':max(positive_days)/sum(positive_days) if positive_days else None,
+        'by_gold_session':by_gold_session,'by_gold_volatility_regime':by_gold_regime,
+        'mean_spread_to_atr_at_decision':mean(spread_ratios) if spread_ratios else None,
         'sample_warning':'Échantillon descriptif, aucune preuve de robustesse et aucune annualisation'}
 
 def preregister(root,config,dataset,splits,experiment):
@@ -133,7 +143,7 @@ def evaluate(root,experiment):
                 curve=[p for p in eng.broker.curve if start<p['time']<=end]
                 initial=curve[0]['equity'] if curve else c['risk']['capital']
                 ev=[e for e in eng.events if start<=e['available_at']<end]
-                counts={k:sum(e['kind']==k for e in ev) for k in ['ENTRY_PENDING','OPEN','EXPIRED','ORDER_REFUSED','AMBIGUOUS_BAR']}
+                counts={k:sum(e['kind']==k for e in ev) for k in ['ENTRY_PENDING','OPEN','EXPIRED','ORDER_REFUSED','AMBIGUOUS_BAR','GOLD_SIGNAL_REFUSED']}
                 cohort={e['order']['id'] for e in ev if e['kind']=='ENTRY_PENDING'}
                 fills={e['order_id'] for e in ev if e['kind']=='OPEN'}
                 counts['fill_rate']=len(cohort & fills)/len(cohort) if cohort else None
@@ -149,7 +159,8 @@ def evaluate(root,experiment):
                     'open_position_at_dataset_end':eng.broker.position is not None,
                     'open_position_details_at_dataset_end':eng.broker.position,
                     'ending_equity_including_open_position':eng.broker.equity,
-                    'baseline':'cash USD 0% sans rémunération, exposition 0; baseline breakout à ajouter'})
+                    'gold_profile':c['gold'],'effective_primitives':eng.effective_primitives,
+                    'baseline':'cash USD 0% sans rémunération, exposition 0; cassure OPR simple via BASELINE-breakout si sélectionnée'})
             name=model['id']+f'-cost{stress}'
             (path/(name+'-events.jsonl')).write_text('\n'.join(canonical(e) for e in eng.events)+'\n')
             (path/(name+'-trades.json')).write_text(canonical(eng.broker.trades))

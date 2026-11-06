@@ -4,6 +4,12 @@ Laboratoire exclusivement consacré à **XAU/USD (or contre dollar américain)**
 
 Interprétation programmable de contenus publics, sans certification ni accès à une méthode privée. Le succès recherché est une mesure reproductible, y compris négative. **Aucune connexion de courtage, aucun ordre réel, aucun bouton de passage en réel.**
 
+## Profil spécialisé Gold v0.2.0
+
+Le **Poste XAU/USD** affiche les unités du contrat, l’ATR M1, le spread en ticks et en proportion de la volatilité, les sessions, les extrêmes de sessions complètes et les refus Gold. Les protections sont actives dans primary/variants. Ce sont des hypothèses préenregistrables, sans calibration de rentabilité. `configs/gold-observation.json` fournit la comparaison sans ces protections.
+
+`python -m lab.cli gold-status` décrit les spécifications et horaires manquants. Lire `docs/GOLD.md` pour les unités, le calendrier fournisseur et le calendrier USD optionnel. Aucun flux de prix ou d’actualités n’est préconfiguré.
+
 ## Démarrage local
 
 Python 3.11+ ; aucune dépendance à installer pour CSV, moteur, tests et interface.
@@ -27,7 +33,7 @@ time,open,high,low,close,ask_open,ask_high,ask_low,ask_close,volume
 
 Les colonnes non préfixées sont le bid. `volume` peut être vide si absent. Le schéma sans données est dans `data/schema.csv`. Les bougies doivent être clôturées, strictement croissantes, sans doublon. Aucune réparation ni interpolation automatique. Les gaps sont conservés et signalés ; les unités supérieures incomplètes sont rejetées.
 
-Copier `configs/instrument.example.json` vers un fichier local et **renseigner les spécifications réelles du fournisseur**, leur provenance et les droits d’usage avant `verified: true`. Les valeurs du modèle sont illustratives et ne sont pas celles d’un courtier. `point_value` est le résultat en USD d’une variation de prix de 1 pour une unité de quantité ; `contract_size` décrit cette unité contractuelle. La quantité et ses incréments doivent utiliser cette même convention. Financement positif = coût facturé par unité et jour UTC ; c’est une approximation explicite. Les devises autres qu’USD sont bloquées, sans conversion inventée. Un XAUUSD CFD n’est pas un futur GC ; aucune substitution.
+Copier `configs/instrument.example.json` vers un fichier local et **renseigner les spécifications réelles du fournisseur**, leur provenance et les droits d’usage avant `verified: true`. Les valeurs du modèle sont illustratives et ne sont pas celles d’un courtier. `point_value` est le résultat en USD d’une variation de prix de 1 pour une unité de quantité ; `contract_size` décrit cette unité contractuelle. Depuis v0.2.0, la quantité est en contrats et `contract_size` en onces troy : `point_value` doit être égal à `contract_size` pour un prix en USD/once. La quantité et ses incréments doivent utiliser cette même convention. Les horaires hebdomadaires et leur source sont requis avant `verified=true`. Financement positif = coût facturé par unité et jour UTC ; c’est une approximation explicite. Les devises autres qu’USD sont bloquées, sans conversion inventée. Un XAUUSD CFD n’est pas un futur GC ; aucune substitution.
 
 ```bash
 python -m lab.cli import-data --file /chemin/xauusd.csv --metadata /chemin/instrument.json
@@ -81,6 +87,8 @@ La fraîcheur est contrôlée à chaque réception et à chaque boucle. Un flux 
 
 ## Documents
 
+- `docs/API.md` : clés et connexions nécessaires, alimentation sans API et gestion des secrets.
+- `docs/GOLD.md` : spécialisation Gold, unités, protections, sessions et limites.
 - `docs/RULES.md`, `docs/rules.json` : registre des règles, passages, hypothèses et divergences.
 - `docs/sources/` : transcriptions automatiques et textes publics effectivement récupérés.
 - `docs/SPECIFICATION.md` : ordre de traitement, formules et états.

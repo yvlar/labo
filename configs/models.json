@@ -6,7 +6,7 @@
     "parameters": {
       "id": "M1-H1-M5",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -33,7 +33,7 @@
     "parameters": {
       "id": "M1-H4-M15",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 240,
       "ltf": 15,
       "exit": "E1",
@@ -60,7 +60,7 @@
     "parameters": {
       "id": "M5A-80-range",
       "family": "M5A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -86,7 +86,7 @@
     "parameters": {
       "id": "M5B-80-range",
       "family": "M5B",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -112,7 +112,7 @@
     "parameters": {
       "id": "M1-sweep",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -139,7 +139,7 @@
     "parameters": {
       "id": "M1-fvg",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -166,7 +166,7 @@
     "parameters": {
       "id": "M1-E2",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E2",
@@ -193,7 +193,7 @@
     "parameters": {
       "id": "M1-E3",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E3",
@@ -220,7 +220,7 @@
     "parameters": {
       "id": "M1-E4",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E4",
@@ -247,7 +247,7 @@
     "parameters": {
       "id": "M1-E5",
       "family": "M1",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E5",
@@ -274,7 +274,7 @@
     "parameters": {
       "id": "M2-H4-H1-M30",
       "family": "M2",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 240,
       "ltf": 30,
       "exit": "E1",
@@ -302,7 +302,7 @@
     "parameters": {
       "id": "M2-D1-H4-H1",
       "family": "M2",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 1440,
       "ltf": 60,
       "exit": "E1",
@@ -330,7 +330,7 @@
     "parameters": {
       "id": "M2-M30-M15-M5",
       "family": "M2",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 30,
       "ltf": 5,
       "exit": "E1",
@@ -358,7 +358,7 @@
     "parameters": {
       "id": "M3-OTE",
       "family": "M3",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E4",
@@ -382,7 +382,7 @@
     "parameters": {
       "id": "M5A-80-confirmation",
       "family": "M5A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -408,7 +408,7 @@
     "parameters": {
       "id": "M5A-80-retest",
       "family": "M5A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -434,7 +434,7 @@
     "parameters": {
       "id": "M5A-90-range",
       "family": "M5A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -460,7 +460,7 @@
     "parameters": {
       "id": "M5A-context",
       "family": "M5A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -486,7 +486,7 @@
     "parameters": {
       "id": "M5B-80-confirmation",
       "family": "M5B",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -512,7 +512,7 @@
     "parameters": {
       "id": "M5B-90-range",
       "family": "M5B",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -538,7 +538,7 @@
     "parameters": {
       "id": "M5B-context",
       "family": "M5B",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",
@@ -564,7 +564,7 @@
     "parameters": {
       "id": "M4A-context",
       "family": "M4A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E1",
@@ -588,7 +588,7 @@
     "parameters": {
       "id": "M4B-reject",
       "family": "M4B",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E1",
@@ -612,7 +612,7 @@
     "parameters": {
       "id": "M6A-continuation",
       "family": "M6A",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -636,7 +636,7 @@
     "parameters": {
       "id": "M6B-continuation",
       "family": "M6B",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -660,7 +660,7 @@
     "parameters": {
       "id": "M6C-continuation",
       "family": "M6C",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 5,
       "exit": "E1",
@@ -684,7 +684,7 @@
     "parameters": {
       "id": "BASELINE-breakout",
       "family": "BASELINE",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "htf": 60,
       "ltf": 1,
       "exit": "E2",

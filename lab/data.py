@@ -109,6 +109,23 @@ def validate_instrument(meta):
             raise ValueError('Coût instrument invalide : '+key)
     if meta.get('volume_kind') not in {'absent','ticks','transactions'}:
         raise ValueError('Nature du volume inconnue')
+    if meta.get('base_currency')!='XAU' or meta.get('price_unit')!='USD_per_troy_ounce' or meta.get('quantity_unit')!='contract':
+        raise ValueError('Contrat Gold : XAU, prix USD par once troy et quantités en contrats requis')
+    if meta.get('product_type') not in {'spot_otc','cfd'} and not (meta.get('synthetic') is True and meta.get('product_type')=='fixture'):
+        raise ValueError('Produit Gold autorisé : spot_otc ou cfd explicitement identifié')
+    if not math.isclose(meta['point_value'],meta['contract_size'],rel_tol=1e-9,abs_tol=1e-12):
+        raise ValueError('Valeur du point Gold incohérente avec les onces troy par contrat')
+    from .gold import validate_market_sessions
+    validate_market_sessions(meta.get('market_sessions',[]))
+    closures=meta.get('market_closures',[])
+    if not isinstance(closures,list):raise ValueError('Liste de fermetures fournisseur invalide')
+    for closure in closures:
+        if not closure.get('source') or not closure.get('reason') or not (
+                dt(closure['available_at'])<=dt(closure['start'])<dt(closure['end'])):
+            raise ValueError('Fermeture fournisseur sans provenance ou chronologie valide')
+    if meta.get('verified') and not meta.get('synthetic') and (
+            not meta.get('market_sessions') or not meta.get('market_sessions_source')):
+        raise ValueError('Horaires Gold et leur provenance requis avant validation du fournisseur')
 
 def import_file(source, metadata, root):
     meta = json.loads(Path(metadata).read_text())

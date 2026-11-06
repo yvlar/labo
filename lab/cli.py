@@ -23,6 +23,8 @@ def main():
     probe.add_argument('--seconds',type=float,default=3);probe.add_argument('--output',default='reports/live-probe.json')
     web=sub.add_parser('serve');web.add_argument('--host',default='127.0.0.1');web.add_argument('--port',type=int,default=8080)
     check=sub.add_parser('check-config');check.add_argument('--config',default='configs/primary.json')
+    gold=sub.add_parser('gold-status');gold.add_argument('--config',default='configs/primary.json')
+    gold.add_argument('--metadata',default='configs/instrument.example.json')
     a=p.parse_args()
     try:
         if hasattr(a,'experiment') and (Path(a.experiment).name!=a.experiment or a.experiment in ('.','..')):
@@ -30,6 +32,13 @@ def main():
         if a.command=='import-data':print(import_file(a.file,a.metadata,ROOT))
         elif a.command=='preregister':print(preregister(ROOT,a.config,a.dataset,a.splits,a.experiment))
         elif a.command=='evaluate':print(evaluate(ROOT,a.experiment))
+        elif a.command=='gold-status':
+            from .data import validate_instrument
+            from .gold import contract_status
+            cfg=json.loads(Path(a.config).read_text());validate_config(cfg)
+            spec=json.loads(Path(a.metadata).read_text());validate_instrument(spec)
+            print(canonical({'contract':contract_status(spec),'profile':cfg['gold'],
+                'market_connection_checked':False,'performance_evaluated_by_this_command':False}))
         elif a.command=='check-config':
             validate_config(json.loads(Path(a.config).read_text()));print('Configuration valide · simulateur interne uniquement')
         elif a.command=='history':

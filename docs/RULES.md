@@ -222,3 +222,40 @@ Baseline comparable : cassure OPR simple.
 Même OPR M5, même fenêtre 80 minutes, sans retest; stop borne opposée et cible2R; coûts/risque identiques.
 Disponibilité : Clôture hors range puis prochaine ouverture
 Divergences : Aucune divergence tranchée sans variante.
+
+# Profil Gold v0.2.0 — hypothèses propres au projet
+
+## H11 — hypothèse
+Contrat XAU/USD explicite en onces troy et marges en ticks fournisseur.
+
+base=XAU; quote=USD; prix=USD/once troy; quantité=contrat; point_value=contract_size; tick_value=tick_size*contract_size. Marge cassure=1tick, égalité=5ticks.
+
+Disponible : Spécifications figées à import et préenregistrement.
+
+## H12 — hypothèse
+ATR et régimes de volatilité causaux du Gold, sans choix automatique de stratégie.
+
+TR=max(high-low,abs(high-close_prev),abs(low-close_prev)); ATR=SMA14 des TR M1 contigus. Régime compare ATR à médiane des 60 ATR antérieurs : faible<0.75, élevé>1.5.
+
+Disponible : Après clôture M1 ; à exécution, ATR disponible à la clôture précédente seulement.
+
+## H13 — hypothèse
+Protection contre un coût de spread excessif et des stops trop proches.
+
+ATR requis; spread/ATR<=0.30; spread/distance_stop<=0.20; distance_stop>=2ticks. Vérification à décision puis à ouverture disponible ; aucune donnée high/low future dans le contrôle du spread.
+
+Disponible : Clôture de décision puis prochaine ouverture ; les refus sont journalisés.
+
+## H14 — hypothèse
+Sessions de contexte Gold et calendrier fournisseur distincts.
+
+Asie09–17 Tokyo; Londres08–16:30 Londres; NY08–17 NY. Extrêmes publiés seulement après fin et toutes M1 présentes. Nouvelles entrées bloquées hors horaires fournisseur ou à<=5min de fermeture connue.
+
+Disponible : À clôture pour contexte et extrêmes ; calendrier public connu avant chaque entrée.
+
+## H15 — hypothèse
+Calendrier USD optionnel et daté, sans résultat macroéconomique futur.
+
+Fenêtre de refus15min avant/après scheduled_at uniquement si available_at<=instant. Chaque annonce porte source et identifiant; pas de récupération automatique ni valeur publiée utilisée.
+
+Disponible : Seulement après available_at du programme public connu.

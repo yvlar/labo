@@ -19,6 +19,8 @@ from lab.cli import ROOT
 
 def cfg(family='M5A'):
     c=json.loads((ROOT/'configs/primary.json').read_text())
+    # Keep original strategy scenarios isolated from the new, separately tested Gold protections.
+    c['gold']['guards']['enabled']=False
     c['models']=[next(m for m in c['models'] if m['family']==family)]
     if family=='M1':c['models'][0]['setup_ttl_minutes']=60
     c['primitives']['pivot_left']=c['primitives']['pivot_right']=1
@@ -204,6 +206,7 @@ class IntegrationTests(unittest.TestCase):
     def test_m2_extreme_selection_without_choch(self):
         c=json.loads((ROOT/'configs/variants.json').read_text())
         c['models']=[next(m for m in c['models'] if m['family']=='M2')]
+        c['gold']['guards']['enabled']=False
         e=Engine(c,spec());m=e.models[0];b=bar(0,130,131,129,130)
         h=e.structures[240];h.trend=1
         z=Zone('parent',1,90,110,START-timedelta(hours=4),b.end,'pivot','Drop–Base–Rally')

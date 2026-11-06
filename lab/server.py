@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib.parse import urlparse,parse_qs
 from .data import canonical, dt, read_csv, validate_instrument, SUPPORTED_SYMBOL
 from .engine import Engine
+from .gold import contract_status
 
 def validate_run_scope(run):
     """Keep archives intact; only expose experiments for the supported pair."""
@@ -46,6 +47,9 @@ def serve(root,host='127.0.0.1',port=8080):
                     return self.reply({'runs':runs,'rules':json.loads((root/'docs/rules.json').read_text()),
                                        'models':json.loads((root/'configs/models.json').read_text()),
                                        'supported_instrument':SUPPORTED_SYMBOL,
+                                       'gold':{'contract':contract_status(json.loads((root/'configs/instrument.example.json').read_text())),
+                                               'profile':json.loads((root/'configs/primary.json').read_text())['gold'],
+                                               'context':None,'guards_enabled':json.loads((root/'configs/primary.json').read_text())['gold']['guards']['enabled']},
                                        'status':'Aucune mesure de marché disponible' if not runs else 'Laboratoire local'})
                 if u.path.startswith('/api/'):
                     name=q.get('run',[''])[0]

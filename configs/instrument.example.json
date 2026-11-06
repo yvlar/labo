@@ -1,7 +1,7 @@
 {
   "provider": "À RENSEIGNER",
   "symbol": "XAUUSD",
-  "product_type": "À RENSEIGNER : spot OTC ou CFD précis",
+  "product_type": "cfd",
   "currency": "USD",
   "price_kind": "bid_ask",
   "volume_kind": "absent",
@@ -14,11 +14,16 @@
   "tick_size": 0.01,
   "point_value": 1,
   "contract_size": 1,
-  "quantity_unit": "once; EXEMPLE À VÉRIFIER",
+  "quantity_unit": "contract",
   "min_qty": 1,
   "qty_step": 1,
   "margin_rate": 0.05,
   "commission_per_unit": 0.01,
   "financing_per_unit_day": 0.0,
-  "specification_status": "Valeurs illustratives hypothétiques; ne permettent pas une recherche ni un flux direct tant que verified=false"
+  "specification_status": "EXEMPLE HYPOTHÉTIQUE : contrat de 1 once troy, CFD à confirmer, horaires fournisseur absents. Aucune spécification de courtier authentifiée.",
+  "base_currency": "XAU",
+  "price_unit": "USD_per_troy_ounce",
+  "market_sessions": [],
+  "market_sessions_source": "",
+  "market_closures": []
 }
