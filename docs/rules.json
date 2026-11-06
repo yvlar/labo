@@ -337,7 +337,7 @@
     ],
     "summary": "Branche OTE en absence de FVG après CHoCH.",
     "status": "explicite",
-    "mathematical_definition": "Entrée=end-(end-start)*0.702; start=dernier pivot opposé confirmé; end=extrême du CHoCH, ancrages figés.",
+    "mathematical_definition": "Entrée=end-(end-start)*0.702; start=dernier pivot opposé confirmé; end=extrême des LTF clôturées de cette impulsion; FVG actifs de l’impulsion examinés; ancrages figés au CHoCH.",
     "parameters": {
       "depth": 0.702,
       "band": [
@@ -491,8 +491,8 @@
       }
     ],
     "summary": "M5B : déplacement et FVG, décision à troisième clôture.",
-    "status": "explicite",
-    "mathematical_definition": "FVG directionnel et clôture hors OPR; première bougie encore dedans, deuxième corps/range>=0.6; marché au prochain open bid/ask.",
+    "status": "interprétation",
+    "mathematical_definition": "FVG directionnel et clôture hors OPR; première bougie encore dedans, deuxième corps/range>=0.6; marché au prochain open bid/ask. Audit0.3 : troisième bougie directionnelle avec corps/range>=0.6 (convention numérique du projet).",
     "parameters": {
       "context_filter": "variante isolée"
     },
@@ -602,7 +602,7 @@
     "variants": [
       "M6A"
     ],
-    "divergences": "Continuation seule implémentée; contre-tendance non implémentée."
+    "divergences": "Continuation seule implémentée; contre-tendance non implémentée. Audit0.3 : context_mode continuation/reversal séparé, expérimental; pas de certification du graphique source."
   },
   {
     "rule_id": "R31",
@@ -626,7 +626,7 @@
     "variants": [
       "M6B"
     ],
-    "divergences": "Aucune divergence tranchée sans variante."
+    "divergences": "Aucune divergence tranchée sans variante. Audit0.3 : context_mode continuation/reversal séparé, expérimental; pas de certification du graphique source."
   },
   {
     "rule_id": "R32",
@@ -651,7 +651,7 @@
     "variants": [
       "M6C"
     ],
-    "divergences": "Passages à affiner; ne constitue pas une transcription exacte du modèle visuel."
+    "divergences": "Passages à affiner; ne constitue pas une transcription exacte du modèle visuel. Audit0.3 : context_mode continuation/reversal séparé, expérimental; pas de certification du graphique source."
   },
   {
     "rule_id": "R40",

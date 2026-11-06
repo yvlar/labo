@@ -1,0 +1,2 @@
+time,open,high,low,close,ask_open,ask_high,ask_low,ask_close,volume,minutes,complete
+2025-01-06T14:30:00+00:00,100.0,101.0,99.0,100.0,100.1,101.1,99.1,100.1,0.0,1,False

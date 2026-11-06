@@ -1,0 +1,2 @@
+# Preserve archived raw audit bytes and their hashes across platforms.
+reports/audit/**/*.csv -text -diff

@@ -1,0 +1,25 @@
+{
+  "markdown": "# 404\n\nHello, it looks like you were sent to a page that does not exist (anymore).\n\nPlease update your bookmarks as we've recently refreshed our [Developer Portal](https://developer.oanda.com/).\n\nWe're redirecting you to the new version of this page now, if that doesn't work then follow this [link to our new portal](http://developer.oanda.com/)\n\n![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)\n\nOriginal text\n\nRate this translation\n\nYour feedback will be used to help improve Google Translate",
+  "metadata": {
+    "viewport": "width=device-width, initial-scale=1",
+    "language": "en",
+    "title": "Page Not Found",
+    "google-translate-customization": "613de8f134fa1dd4-d28c93d267de3976-g4696095b5a32dcda-13",
+    "favicon": "https://developer.oanda.com/images/favicon.ico",
+    "scrapeId": "01a1b06a-f71b-75fd-ac38-f0059126dde1",
+    "sourceURL": "https://developer.oanda.com/rest-live-v20/instrument-ep/",
+    "url": "https://developer.oanda.com/rest-live-v20/instrument-ep/",
+    "statusCode": 404,
+    "error": "Not Found",
+    "contentType": "text/html; charset=utf-8",
+    "proxyUsed": "basic",
+    "cacheState": "hit",
+    "cachedAt": "2026-11-05T20:54:52.113Z",
+    "creditsUsed": 1,
+    "concurrencyLimited": false
+  },
+  "agent_hints": [
+    "The source page returned 404. If you need its current location or an alternative, use firecrawl_search with {\"query\":\"site:developer.oanda.com rest live v20 instrument ep\",\"sources\":[\"web\"]}. Adjust the query to the page identity from your task; this is not a transient-error retry."
+  ],
+  "conversationId": "1263dd13-eca6-8236-9cba-fd3909043f28"
+}

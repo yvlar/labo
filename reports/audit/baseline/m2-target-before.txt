@@ -1,0 +1,14 @@
+test_m2_refinement_preserves_the_parent_external_target (tests.test_audit_regressions.AuditRegressions.test_m2_refinement_preserves_the_parent_external_target) ... FAIL
+
+======================================================================
+FAIL: test_m2_refinement_preserves_the_parent_external_target (tests.test_audit_regressions.AuditRegressions.test_m2_refinement_preserves_the_parent_external_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 32, in test_m2_refinement_preserves_the_parent_external_target
+    self.assertEqual(e.broker.orders[0].target,150)
+AssertionError: 100 != 150
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

@@ -1,0 +1,2 @@
+COMMAND: python -m lab.cli import-data --file /workspace/olinv-lab/reports/audit/reproduction/M5-fvg-gap/raw-test-only.csv --metadata /workspace/olinv-lab/reports/audit/reproduction/metadata-test-only.json
+/workspace/olinv-lab/data/normalized/232356bb2e76c90a081ee93c987e0057956a0700f054bba88c5c62669b56d3cd

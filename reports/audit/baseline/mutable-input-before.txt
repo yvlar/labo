@@ -1,0 +1,14 @@
+test_caller_cannot_mutate_frozen_engine_parameters (tests.test_audit_regressions.AuditRegressions.test_caller_cannot_mutate_frozen_engine_parameters) ... FAIL
+
+======================================================================
+FAIL: test_caller_cannot_mutate_frozen_engine_parameters (tests.test_audit_regressions.AuditRegressions.test_caller_cannot_mutate_frozen_engine_parameters)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 28, in test_caller_cannot_mutate_frozen_engine_parameters
+    self.assertEqual(e.broker.cfg['slippage_ticks'],1)
+AssertionError: 999 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

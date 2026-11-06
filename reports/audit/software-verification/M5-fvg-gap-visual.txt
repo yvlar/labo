@@ -1,0 +1,5 @@
+COMMAND: python -m lab.cli export-decision --dataset /workspace/olinv-lab/data/normalized/232356bb2e76c90a081ee93c987e0057956a0700f054bba88c5c62669b56d3cd --config /workspace/olinv-lab/reports/audit/software-verification/M5-fvg-gap/config-test-only.json --output /workspace/olinv-lab/reports/audit/software-verification/M5-fvg-gap/visual --seq 6 --software-test
+/workspace/olinv-lab/reports/audit/software-verification/M5-fvg-gap/visual
+mkdir -p failed for path /home/agent/.config/matplotlib: [Errno 30] Read-only file system: '/home/agent/.config/matplotlib'
+Matplotlib created a temporary cache directory at /tmp/matplotlib-k9gqq5yt because there was an issue with the default path (/home/agent/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+Fontconfig error: No writable cache directories

@@ -41,3 +41,7 @@ Ajout du Poste XAU/USD, des unités USD/once troy et contrat, de la cohérence p
 Les spécifications d’exemple et le calendrier fournisseur restent non vérifiés ; aucune collecte de données de marché n’a été ajoutée, aucune performance n’est mesurée. Les financements restent simplifiés. Voir `GOLD.md` et `gold-specialization-verification.json` pour le périmètre et la vérification de cette version.
 
 Vérification v0.2.0 : 58 tests logiciels réussis et syntaxe JavaScript contrôlée. Le contrôle navigateur de cette nouvelle interface a été interrompu ; les anciens résultats Chromium et l’ancienne capture concernent la version antérieure. La nouvelle interface reste à vérifier dans un navigateur. Aucun processus durable n’est lancé.
+
+## Audit indépendant0.3.0
+
+Voir audit/REPORT.md et audit/verdicts.json : corrections par contradiction, référence24e2258 conservée, aucune mesure de marché, fidélité partielle par méthode. La parité nominale à bougies ne certifie pas la latence du flux actuel. Le serveur et le navigateur n’ont pas pu démarrer dans le sandbox ; les exports matplotlib ont été produits. Les anciens rapports et captures sont conservés et ne prouvent pas cette version.

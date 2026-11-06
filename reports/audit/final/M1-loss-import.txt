@@ -1,0 +1,2 @@
+COMMAND: python -m lab.cli import-data --file /workspace/olinv-lab/reports/audit/final/M1-loss/raw-test-only.csv --metadata /workspace/olinv-lab/reports/audit/final/metadata-test-only.json
+/workspace/olinv-lab/data/normalized/41f32a1b0a22c298b1cfe00497f020440411d852d6ae39f02839e1dd6b2671e2

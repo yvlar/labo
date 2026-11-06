@@ -1,0 +1,82 @@
+{
+  "version": "0.3.0",
+  "execution": {
+    "mode": "internal",
+    "account_type": "simulation",
+    "endpoint": null
+  },
+  "risk": {
+    "capital": 100000,
+    "risk_per_trade": 0.0025,
+    "max_open_risk": 0.005,
+    "daily_loss_limit": 0.01,
+    "slippage_ticks": 1,
+    "latency_seconds": 0,
+    "partial_fraction": 0.5
+  },
+  "primitives": {
+    "pivot_left": 2,
+    "pivot_right": 2,
+    "break_margin": 0.01,
+    "equal_tolerance": 0.05,
+    "sweep_bars": 3,
+    "base_body_max": 0.5,
+    "impulse_body_min": 0.6,
+    "zone_ttl_minutes": 2880
+  },
+  "research": {
+    "budget": 120,
+    "seed": 17,
+    "optimization": "none",
+    "primary_metric": "net_expectancy_r",
+    "min_trades": 100,
+    "bootstrap": "journées, 1000 réplications"
+  },
+  "models": [
+    {
+      "id": "M1-H1-M5",
+      "family": "M1",
+      "version": "0.3.0",
+      "htf": 60,
+      "ltf": 5,
+      "exit": "E1",
+      "order_ttl_minutes": 30,
+      "setup_ttl_minutes": 30,
+      "window_minutes": 80,
+      "stop_variant": "range",
+      "confirmation_body_min": 0.6,
+      "require_sweep": false,
+      "require_fvg": false,
+      "require_context": false,
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R10"
+      ]
+    }
+  ],
+  "gold": {
+    "version": "gold-0.2.0",
+    "atr_period": 14,
+    "regime_lookback": 60,
+    "regime_low": 0.75,
+    "regime_high": 1.5,
+    "break_margin_ticks": 1,
+    "equal_tolerance_ticks": 5,
+    "guards": {
+      "enabled": true,
+      "require_atr": true,
+      "max_spread_to_atr": 0.3,
+      "max_spread_to_stop": 0.2,
+      "min_stop_ticks": 2,
+      "close_buffer_minutes": 5
+    },
+    "usd_calendar": {
+      "enabled": false,
+      "before_minutes": 15,
+      "after_minutes": 15,
+      "events": []
+    }
+  }
+}

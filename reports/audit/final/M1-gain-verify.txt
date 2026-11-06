@@ -1,0 +1,2 @@
+COMMAND: python -m lab.cli verify-engine --dataset /workspace/olinv-lab/data/normalized/62ef3f1cf9266028ad76e09b01d917a817b3db801bc9798376f19886ae04e7b3 --config /workspace/olinv-lab/reports/audit/final/M1-gain/config-test-only.json --output /workspace/olinv-lab/reports/audit/final/M1-gain/verification --software-test
+{"passed":true,"performance_metrics":null,"synthetic":true}

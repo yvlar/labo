@@ -1,0 +1,14 @@
+test_m5b_weak_third_candle_is_not_strong_confirmation (tests.test_audit_regressions.AuditRegressions.test_m5b_weak_third_candle_is_not_strong_confirmation) ... FAIL
+
+======================================================================
+FAIL: test_m5b_weak_third_candle_is_not_strong_confirmation (tests.test_audit_regressions.AuditRegressions.test_m5b_weak_third_candle_is_not_strong_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 28, in test_m5b_weak_third_candle_is_not_strong_confirmation
+    self.assertFalse(e.broker.orders)
+AssertionError: [Intent(id='M5B-80-range:2025-01-06T14:38:00+00:00', strategy='M5B-80-range', direction=1, kind='market', entry=104.19999999999999, stop=98.99, target=114.61999999999998, decision_at=datetime.datetime(2025, 1, 6, 14, 38, tzinfo=datetime.timezone.utc), expires=datetime.datetime(2025, 1, 6, 15, 8, tzinfo=datetime.timezone.utc), policy='E2', reasons={'model': 'FVG', 'opr': {'high': 101.0, 'low': 99.0, 'available_at': datetime.datetime(2025, 1, 6, 14, 35, tzinfo=datetime.timezone.utc), 'start': datetime.datetime(2025, 1, 6, 14, 30, tzinfo=datetime.timezone.utc)}, 'decision': 'troisième clôture', 'stop_variant': 'range', 'gold_context': {'available_at': datetime.datetime(2025, 1, 6, 14, 38, tzinfo=datetime.timezone.utc), 'atr_m1_usd_per_ounce': None, 'atr_period': 14, 'atr_reference': None, 'volatility_regime': 'INDÉTERMINÉ', 'spread_usd_per_ounce': 0.09999999999999432, 'spread_ticks': 9.999999999999432, 'spread_to_atr': None, 'active_sessions': ['LONDRES', 'NEW_YORK'], 'session_bucket': 'NEW_YORK', 'previous_sessions': {}, 'market_access': {'known': False, 'open': None, 'reason': 'Calendrier fournisseur absent'}, 'usd_calendar': {'enabled': False, 'configured': False, 'next': None, 'blackout_ids': []}, 'session_convention': 'Fenêtres de contexte du projet, sans attribution aux horaires S6'}, 'gold_signal_check': {'allowed': True, 'reason': 'Contexte Gold en observation', 'checks': {'at': datetime.datetime(2025, 1, 6, 14, 38, tzinfo=datetime.timezone.utc), 'spread_usd_per_ounce': 0.09999999999999432, 'stop_usd_per_ounce': 5.209999999999994, 'spread_to_stop': 0.01919385796544999, 'spread_to_atr': None, 'atr_available_at': datetime.datetime(2025, 1, 6, 14, 38, tzinfo=datetime.timezone.utc), 'atr_m1_usd_per_ounce': None}}, 'opportunity_id': 'OPR:5:2025-01-06', 'rule_ids': ['R22', 'R24', 'R25'], 'version': '0.2.0'})] is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

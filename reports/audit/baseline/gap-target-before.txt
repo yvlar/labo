@@ -1,0 +1,17 @@
+test_known_opening_target_precedes_a_later_stop (tests.test_audit_regressions.AuditRegressions.test_known_opening_target_precedes_a_later_stop) ... FAIL
+
+======================================================================
+FAIL: test_known_opening_target_precedes_a_later_stop (tests.test_audit_regressions.AuditRegressions.test_known_opening_target_precedes_a_later_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 28, in test_known_opening_target_precedes_a_later_stop
+    self.assertEqual(broker.trades[0]['exits'][0]['reason'],'TARGET_OPEN')
+AssertionError: 'STOP' != 'TARGET_OPEN'
+- STOP
++ TARGET_OPEN
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

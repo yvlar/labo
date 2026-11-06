@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "lab.cli",
+    "import-data",
+    "--file",
+    "reports/audit/incomplete-test-only.csv",
+    "--metadata",
+    "reports/audit/baseline/instrument-software-test.json"
+  ],
+  "exit_code": 2,
+  "stderr": "Erreur : Bougie d\u00e9clar\u00e9e incompl\u00e8te par le fournisseur\n",
+  "synthetic": true
+}

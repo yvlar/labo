@@ -85,9 +85,10 @@ class AuditRegressions(unittest.TestCase):
         self.assertEqual([x['strategy'] for x in opened],['M5B-80-range'])
 
     def test_fixed_r_exit_does_not_require_structural_target(self):
-        c=cfg('M1');c['models'][0]['exit']='E2';e=Engine(c,spec());b=bar(0)
-        self.assertTrue(e.models[0].order(b,1,100,99,100,'limit',{}))
-        self.assertEqual(e.broker.orders[0].target,102)
+        for policy,target in [('E2',102),('E3',103)]:
+            c=cfg('M1');c['models'][0]['exit']=policy;e=Engine(c,spec());b=bar(0)
+            self.assertTrue(e.models[0].order(b,1,100,99,100,'limit',{}))
+            self.assertEqual(e.broker.orders[0].target,target)
 
     def setup_ote(self):
         e=Engine(variant('M3'),spec());model=e.models[0];b=bar(30,110,111,109,110)

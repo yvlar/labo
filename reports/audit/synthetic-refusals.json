@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "python",
+      "-m",
+      "lab.cli",
+      "history",
+      "--config",
+      "configs/primary.json",
+      "--dataset",
+      "/workspace/olinv-lab/data/normalized/62ef3f1cf9266028ad76e09b01d917a817b3db801bc9798376f19886ae04e7b3",
+      "--experiment",
+      "audit-synthetic-history-must-refuse"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "Erreur : Rejeu utilisateur réservé aux données de marché vérifiées; synthétique réservé aux tests\n"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "lab.cli",
+      "preregister",
+      "--config",
+      "configs/primary.json",
+      "--dataset",
+      "/workspace/olinv-lab/data/normalized/62ef3f1cf9266028ad76e09b01d917a817b3db801bc9798376f19886ae04e7b3",
+      "--splits",
+      "configs/splits.example.json",
+      "--experiment",
+      "audit-synthetic-performance-must-refuse"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "Erreur : Recherche de performance interdite : données synthétiques ou métadonnées non vérifiées\n"
+  }
+]

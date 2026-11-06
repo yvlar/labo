@@ -1,4 +1,4 @@
-# Spécifications déterministes v0.2.0
+# Spécifications déterministes v0.3.0
 
 Périmètre fixé au 2026-11-06 : XAU/USD exclusivement. `symbol` doit être exactement `XAUUSD`. Le contrôle commun refuse les autres symboles avant import, initialisation du simulateur, préenregistrement, évaluation ou lancement du flux. Les archives d’autres instruments sont conservées mais ne sont pas proposées dans l’interface. Les spécifications du fournisseur pour XAU/USD restent obligatoires ; cette restriction ne calibre aucun seuil et ne valide aucune performance.
 
@@ -13,7 +13,7 @@ Les événements portent `seq`, `event_time`, `available_at`, instrument, strat�
 ## Ordre commun historique/direct
 
 1. Valider M1 ; doublon identique idempotent, correction refusée. Détecter gap et annuler les ordres/confirmations en attente. Réinitialiser les fenêtres des primitives pour ne pas créer un FVG sur un trou.
-2. Gérer la position existante : financement, stops, cible, partiel. Puis examiner les ordres créés précédemment, uniquement si `bar.time >= decision_at + latency`.
+2. Figer si une position existait à l’ouverture. Gérer les sorties : quote d’ouverture connue prioritaire, avec partiel E4 avant solde, puis convention stop prioritaire pour les touches intrabougie non ordonnées. Une sortie intrabougie ne libère pas une nouvelle entrée à l’ouverture antérieure. Examiner les ordres créés précédemment uniquement si aucune position n’existait à cette ouverture et `bar.time >= decision_at + latency`.
 3. Marquer le capital au bid pour achat ou ask pour vente ; appliquer le blocage quotidien. Une seule nouvelle entrée par M1, une seule position simultanée.
 4. Construire les HTF complètes, des plus grandes aux plus petites. Mettre à jour contacts et invalidations des objets déjà actifs. Confirmer pivots, BOS/CHoCH, sweeps, zones et FVG.
 5. Exécuter les modèles par identifiant lexicographique stable ; décisions et ordres sont disponibles à cette clôture et n’entrent jamais dans la M1 déjà traitée.
@@ -36,13 +36,13 @@ M1 : continuation HTF ; choisir la plus ancienne zone pivot valide touchée (dis
 
 M2 : sélection figée à activation du parent, depuis zones confirmées et emboîtées, avec chaînes H4→H1→M30, D1→H4→H1, M30→M15→M5. Acheter la plus basse / vendre la plus haute parmi les derniers enfants valides. Aucun CHoCH requis. Les sous-zones doivent être contenues géométriquement et leur origine postérieure à celle du parent. Les chemins incomplets produisent une absence explicite, pas une sélection a posteriori.
 
-M3 : même contexte de contact/CHoCH, mais uniquement si aucun FVG directionnel n’apparaît à cette clôture. Impulsion entre dernier pivot opposé confirmé et extrême du CHoCH, entrée à profondeur70,2%, stop derrière l’ancre, cible structurelle. La présence de FVG refuse cette branche avant tout résultat. L’absence de FVG sur une impulsion discrétionnaire plus large n’est pas reproduite.
+M3 : même contexte de contact/CHoCH, mais uniquement si aucun FVG directionnel encore actif de l’impulsion n’est connu à cette clôture. Impulsion entre dernier pivot opposé confirmé et extrême des bougies LTF clôturées depuis son origine, entrée à profondeur70,2%, stop derrière l’ancre, cible structurelle. La présence de FVG refuse cette branche avant tout résultat. La définition d’impulsion par pivot confirmé reste une convention ; aucun ancrage visuel discrétionnaire n’est prétendu.
 
 M4A : range M15, biais HTF obligatoire, cassure/retest puis confirmation M1 au-delà de la bougie de retest. M4B : dépassement d’une borne, clôture réintégrée directionnelle, corps≥60%, cible borne opposée. Contexte mesurable mais non obligatoire pour B par défaut. Une occasion soumise par session.
 
-M5A : range M5, clôture M1 extérieure, retest ultérieur, autre bougie directionnelle corps≥60% clôturant au-delà de l’extrême de retest. Le stop de retest utilise l’extrême de cette bougie ; il n’exige pas un pivot fractal confirmé supplémentaire. M5B : FVG directionnel sur trois M1, deuxième bougie au corps≥60%, première clôture encore du côté intérieur de la borne et troisième clôture extérieure. Décision à troisième clôture, marché au prochain open observé. Un stop de retest est interdit dans B puisqu’aucun retest n’y est requis ; seuls borne du range ou bougie de confirmation sont comparés. Contexte optionnel dans variante distincte. Fenêtre80min **depuis09:30**, variante90. Un ordre par session, pas de choix automatique M5/M15.
+M5A : range M5, clôture M1 extérieure, retest ultérieur, autre bougie directionnelle corps≥60% clôturant au-delà de l’extrême de retest. Le stop de retest utilise l’extrême de cette bougie ; il n’exige pas un pivot fractal confirmé supplémentaire. M5B : FVG directionnel sur trois M1, deuxième et troisième bougies au corps≥60%, troisième directionnelle, première clôture encore du côté intérieur de la borne et troisième clôture extérieure. Décision à troisième clôture, marché au prochain open observé. Un stop de retest est interdit dans B puisqu’aucun retest n’y est requis ; seuls borne du range ou bougie de confirmation sont comparés. Contexte optionnel dans variante distincte. Fenêtre80min **depuis09:30**, variante90. Un ordre par session, pas de choix automatique M5/M15.
 
-M6A/B/C : modèles de continuation HTF distincts, réservés à l’expérimentation. A=sweep+englobement des corps ; B=mèche précédente≥50% puis clôture directionnelle au-delà de son extrême ; C=CHoCH, base3bougies compactes, cassure puis retest directionnel. Corps de confirmation≥60%. Le volet contre-tendance n’est pas implémenté.
+M6A/B/C : modèles distincts réservés à l’expérimentation. Le défaut est continuation HTF ; context_mode=reversal sélectionne explicitement les zones opposées au biais HTF, dans configs/audit-comparisons.json. Ce choix de contexte est une convention expérimentale distincte, jamais choisi après résultat. A=sweep+englobement des corps ; B=mèche précédente≥50% puis clôture directionnelle au-delà de son extrême ; C=CHoCH, base3bougies compactes, cassure puis retest directionnel. Corps de confirmation≥60%. Le volet contre-tendance n’est pas implémenté.
 
 La baseline cassure simple partage instrument, OPR M5, fenêtre80min, budget de risque, coûts et cible2R. Aucun filtre de qualité combiné ou score à poids appris.
 
@@ -57,3 +57,7 @@ Stops : pire de stop et ouverture, puis slippage défavorable. Sur bougie stop+c
 E1 structurel ; E2 cible2R ; E3 cible3R ; E4 cible structurelle au-delà de2R, partiel50% de quantité initiale arrondi à2R et stop au fill effectif à partir de M1 suivante ; E5 rejet si cible structurelle<2,5R. En E4, quantité insuffisante pour deux lots minimaux : partiel refusé et journalisé, aucun BE activé. Les commissions de chaque jambe et financement sont déduits ; R net=PnL net pondéré / risque de prix initial. Break-even au prix d’entrée n’implique pas net zéro.
 
 États effectifs : contexte disponible → contact → confirmation attendue → ordre en attente → ouvert → partiellement fermé → fermé ; branches expirées/refusées/invalidées. M2 va directement de contexte à ordre limite. Les décisions d’attente explicitent les états qui n’ont pas généré de signal. Le journal d’événements est la source de vérité, pas un état graphique reconstruit avec le futur.
+
+## Limite du modèle d’arrivée
+
+Le mode live reçoit des M1 clôturées et utilise received_at pour la fraîcheur. Les available_at du moteur et ses prix next-open restent ceux du modèle nominal de bougies, avec latence configurée (défaut0). La parité à horloge virtuelle vérifie ce modèle, pas les délais de livraison effectifs. Une réception retardée et une première cotation réellement disponible après décision doivent être mesurées sur le futur flux avant de certifier des résultats prospectifs ; les ticks manquants ne sont pas reconstruits. Cette réserve est matérielle, notamment pour M5B.

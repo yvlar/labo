@@ -1,0 +1,110 @@
+test_cad_account_cannot_be_silently_valued_in_usd (tests.test_audit_regressions.AuditRegressions.test_cad_account_cannot_be_silently_valued_in_usd) ... FAIL
+test_canonical_label_does_not_allow_etf_provider_symbol (tests.test_audit_regressions.AuditRegressions.test_canonical_label_does_not_allow_etf_provider_symbol) ... FAIL
+test_fixed_r_exit_does_not_require_structural_target (tests.test_audit_regressions.AuditRegressions.test_fixed_r_exit_does_not_require_structural_target) ... FAIL
+test_half_at_two_r_then_entry_gives_one_r_gross (tests.test_audit_regressions.AuditRegressions.test_half_at_two_r_then_entry_gives_one_r_gross) ... ok
+test_intrabar_exit_does_not_free_position_at_earlier_open (tests.test_audit_regressions.AuditRegressions.test_intrabar_exit_does_not_free_position_at_earlier_open) ... FAIL
+test_m6_retest_below_broken_level_is_not_long_confirmation (tests.test_audit_regressions.AuditRegressions.test_m6_retest_below_broken_level_is_not_long_confirmation) ... FAIL
+test_ote_anchor_uses_the_ltf_impulse_not_last_m1_wick (tests.test_audit_regressions.AuditRegressions.test_ote_anchor_uses_the_ltf_impulse_not_last_m1_wick) ... FAIL
+test_ote_cannot_ignore_a_fvg_earlier_in_same_impulse (tests.test_audit_regressions.AuditRegressions.test_ote_cannot_ignore_a_fvg_earlier_in_same_impulse) ... FAIL
+test_sweep_can_reintegrate_on_later_bar_within_bound (tests.test_audit_regressions.AuditRegressions.test_sweep_can_reintegrate_on_later_bar_within_bound) ... FAIL
+
+======================================================================
+FAIL: test_cad_account_cannot_be_silently_valued_in_usd (tests.test_audit_regressions.AuditRegressions.test_cad_account_cannot_be_silently_valued_in_usd)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 81, in test_cad_account_cannot_be_silently_valued_in_usd
+    with self.assertRaises(ValueError):validate_instrument(spec()|{'account_currency':'CAD'})
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_label_does_not_allow_etf_provider_symbol (tests.test_audit_regressions.AuditRegressions.test_canonical_label_does_not_allow_etf_provider_symbol)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 84, in test_canonical_label_does_not_allow_etf_provider_symbol
+    with self.assertRaises(ValueError):validate_instrument(spec()|{'provider_symbol':'GLD'})
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_fixed_r_exit_does_not_require_structural_target (tests.test_audit_regressions.AuditRegressions.test_fixed_r_exit_does_not_require_structural_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 34, in test_fixed_r_exit_does_not_require_structural_target
+    self.assertTrue(e.models[0].order(b,1,100,99,100,'limit',{}))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_intrabar_exit_does_not_free_position_at_earlier_open (tests.test_audit_regressions.AuditRegressions.test_intrabar_exit_does_not_free_position_at_earlier_open)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 30, in test_intrabar_exit_does_not_free_position_at_earlier_open
+    self.assertEqual([x['strategy'] for x in opened],['M5B-80-range'])
+AssertionError: Lists differ: ['M5B-80-range', 'M5A-80-range'] != ['M5B-80-range']
+
+First list contains 1 additional elements.
+First extra element 1:
+'M5A-80-range'
+
+- ['M5B-80-range', 'M5A-80-range']
++ ['M5B-80-range']
+
+======================================================================
+FAIL: test_m6_retest_below_broken_level_is_not_long_confirmation (tests.test_audit_regressions.AuditRegressions.test_m6_retest_below_broken_level_is_not_long_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 78, in test_m6_retest_below_broken_level_is_not_long_confirmation
+    self.assertEqual(e.broker.orders,[])
+AssertionError: Lists differ: [Intent(id='M6C-continuation:2025-01-06T15[778 chars]0'})] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+Intent(id='M6C-continuation:2025-01-06T15:01:00+00:00', strategy='M6C-continuation', direction=1, kind='market', entry=100.0, stop=97.99, target=120, decision_at=datetime.datetime(2025, 1, 6, 15, 1, tzinfo=datetime.timezone.utc), expires=datetime.datetime(2025, 1, 6, 15, 31, tzinfo=datetime.timezone.utc), policy='E1', reasons={'zone_id': 'HTF', 'variant': 'M6C', 'continuation': True, 'gold_context': None, 'gold_signal_check': {'allowed': True, 'reason': 'Contexte Gold en observation', 'checks': {'at': datetime.datetime(2025, 1, 6, 15, 1, tzinfo=datetime.timezone.utc), 'spread_usd_per_ounce': 0.09999999999999432, 'stop_usd_per_ounce': 2.010000000000005, 'spread_to_stop': 0.049751243781091574, 'spread_to_atr': None, 'atr_available_at': None, 'atr_m1_usd_per_ounce': None}}, 'rule_ids': ['R32'], 'version': '0.2.0'})
+
+Diff is 1495 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_ote_anchor_uses_the_ltf_impulse_not_last_m1_wick (tests.test_audit_regressions.AuditRegressions.test_ote_anchor_uses_the_ltf_impulse_not_last_m1_wick)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 53, in test_ote_anchor_uses_the_ltf_impulse_not_last_m1_wick
+    self.assertEqual(e.broker.orders[0].reasons['anchors'],[90,120])
+AssertionError: Lists differ: [90, 111.0] != [90, 120]
+
+First differing element 1:
+111.0
+120
+
+- [90, 111.0]
+?       ^^^
+
++ [90, 120]
+?       ^
+
+
+======================================================================
+FAIL: test_ote_cannot_ignore_a_fvg_earlier_in_same_impulse (tests.test_audit_regressions.AuditRegressions.test_ote_cannot_ignore_a_fvg_earlier_in_same_impulse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 61, in test_ote_cannot_ignore_a_fvg_earlier_in_same_impulse
+    self.assertEqual(e.broker.orders,[])
+AssertionError: Lists differ: [Intent(id='M3-OTE:2025-01-06T15:01:00+00:[830 chars]0'})] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+Intent(id='M3-OTE:2025-01-06T15:01:00+00:00', strategy='M3-OTE', direction=1, kind='limit', entry=96.35799999999999, stop=89.99, target=140, decision_at=datetime.datetime(2025, 1, 6, 15, 1, tzinfo=datetime.timezone.utc), expires=datetime.datetime(2025, 1, 6, 15, 31, tzinfo=datetime.timezone.utc), policy='E4', reasons={'htf_zone': 'HTF', 'choch': 'broken', 'sweep_at_retest': False, 'anchors': [90, 111.0], 'depth': 0.702, 'no_fvg': True, 'gold_context': None, 'gold_signal_check': {'allowed': True, 'reason': 'Contexte Gold en observation', 'checks': {'at': datetime.datetime(2025, 1, 6, 15, 1, tzinfo=datetime.timezone.utc), 'spread_usd_per_ounce': 0.09999999999999432, 'stop_usd_per_ounce': 6.367999999999995, 'spread_to_stop': 0.01570351758793882, 'spread_to_atr': None, 'atr_available_at': None, 'atr_m1_usd_per_ounce': None}}, 'rule_ids': ['R12'], 'version': '0.2.0'})
+
+Diff is 1604 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_sweep_can_reintegrate_on_later_bar_within_bound (tests.test_audit_regressions.AuditRegressions.test_sweep_can_reintegrate_on_later_bar_within_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 67, in test_sweep_can_reintegrate_on_later_bar_within_bound
+    self.assertTrue(any(x['kind']=='SWEEP' for x in events))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.007s
+
+FAILED (failures=8)

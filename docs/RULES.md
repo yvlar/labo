@@ -259,3 +259,7 @@ Calendrier USD optionnel et daté, sans résultat macroéconomique futur.
 Fenêtre de refus15min avant/après scheduled_at uniquement si available_at<=instant. Chaque annonce porte source et identifiant; pas de récupération automatique ni valeur publiée utilisée.
 
 Disponible : Seulement après available_at du programme public connu.
+
+# Audit0.3.0
+
+Le registre indépendant reports/audit/rules-audited.json reprend les passages exacts des segments et qualifie les conventions. M3 examine les FVG actifs de l’impulsion entière et fige ses ancrages sur les LTF clôturées. M5B exige une troisième bougie directionnelle forte selon le seuil numérique préexistant. M6 peut séparer continuation et retournement par configurations expérimentales. Aucun de ces correctifs n’a été choisi sur un résultat de marché.

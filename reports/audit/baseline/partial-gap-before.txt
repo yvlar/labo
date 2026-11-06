@@ -1,0 +1,23 @@
+test_gap_over_partial_and_target_still_respects_quantities (tests.test_audit_regressions.AuditRegressions.test_gap_over_partial_and_target_still_respects_quantities) ... FAIL
+test_known_opening_partial_precedes_later_stop (tests.test_audit_regressions.AuditRegressions.test_known_opening_partial_precedes_later_stop) ... FAIL
+
+======================================================================
+FAIL: test_gap_over_partial_and_target_still_respects_quantities (tests.test_audit_regressions.AuditRegressions.test_gap_over_partial_and_target_still_respects_quantities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 29, in test_gap_over_partial_and_target_still_respects_quantities
+    self.assertEqual(len(broker.trades[0]['exits']),2)
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_known_opening_partial_precedes_later_stop (tests.test_audit_regressions.AuditRegressions.test_known_opening_partial_precedes_later_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/olinv-lab/tests/test_audit_regressions.py", line 38, in test_known_opening_partial_precedes_later_stop
+    self.assertAlmostEqual(sum(x['gross'] for x in broker.trades[0]['exits'])/initial,.5)
+AssertionError: -1.0 != 0.5 within 7 places (1.5 difference)
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=2)

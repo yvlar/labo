@@ -4,6 +4,10 @@ Laboratoire exclusivement consacré à **XAU/USD (or contre dollar américain)**
 
 Interprétation programmable de contenus publics, sans certification ni accès à une méthode privée. Le succès recherché est une mesure reproductible, y compris négative. **Aucune connexion de courtage, aucun ordre réel, aucun bouton de passage en réel.**
 
+## Audit indépendant v0.3.0
+
+Voir `reports/audit/REPORT.md` pour les défauts reproduits, corrections, verdicts par méthode, limites et commandes exactes. Les vérifications locales ne démontrent aucune performance de marché. `verify-engine` compare le modèle historique au même chemin d’ingestion que live sous horloge virtuelle ; `export-decision` exporte deux vues causales d’un événement. Les données synthétiques y sont autorisées seulement avec `--software-test` et ne génèrent aucune performance. Les prix et délais d’arrivée actuels restent à vérifier.
+
 ## Profil spécialisé Gold v0.2.0
 
 Le **Poste XAU/USD** affiche les unités du contrat, l’ATR M1, le spread en ticks et en proportion de la volatilité, les sessions, les extrêmes de sessions complètes et les refus Gold. Les protections sont actives dans primary/variants. Ce sont des hypothèses préenregistrables, sans calibration de rentabilité. `configs/gold-observation.json` fournit la comparaison sans ces protections.

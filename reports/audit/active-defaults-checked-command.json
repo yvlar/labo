@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "lab.cli",
+    "verify-engine",
+    "--dataset",
+    "/workspace/olinv-lab/data/normalized/62ef3f1cf9266028ad76e09b01d917a817b3db801bc9798376f19886ae04e7b3",
+    "--config",
+    "configs/primary.json",
+    "--output",
+    "reports/audit/active-defaults-checked",
+    "--software-test"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"passed\":true,\"performance_metrics\":null,\"synthetic\":true}\n",
+  "stderr": ""
+}
