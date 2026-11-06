@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 UTC = timezone.utc
+SUPPORTED_SYMBOL = 'XAUUSD'
 
 def dt(value):
     result = datetime.fromisoformat(str(value).replace('Z', '+00:00'))
@@ -95,6 +96,8 @@ def check(bars, as_of=None):
     return {'bars': len(bars), 'gaps': gaps, 'policy': 'aucun comblement; HTF/OPR incomplets rejetés'}
 
 def validate_instrument(meta):
+    if meta.get('symbol') != SUPPORTED_SYMBOL:
+        raise ValueError('Laboratoire exclusivement XAU/USD : symbole XAUUSD requis')
     if meta.get('currency')!='USD' or meta.get('price_kind')!='bid_ask':
         raise ValueError('Seuls USD et bid/ask séparés sont pris en charge')
     for key in ['tick_size','point_value','contract_size','min_qty','qty_step','margin_rate']:

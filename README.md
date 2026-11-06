@@ -1,5 +1,7 @@
 # O / LAB — laboratoire quantitatif OlinVest
 
+Laboratoire exclusivement consacré à **XAU/USD (or contre dollar américain)**. Le symbole des métadonnées doit être exactement `XAUUSD` ; les autres instruments sont refusés à l’import, dans le moteur, en recherche et en simulation directe.
+
 Interprétation programmable de contenus publics, sans certification ni accès à une méthode privée. Le succès recherché est une mesure reproductible, y compris négative. **Aucune connexion de courtage, aucun ordre réel, aucun bouton de passage en réel.**
 
 ## Démarrage local

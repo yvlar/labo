@@ -1,5 +1,7 @@
 # Spécifications déterministes v0.1.0
 
+Périmètre fixé au 2026-11-06 : XAU/USD exclusivement. `symbol` doit être exactement `XAUUSD`. Le contrôle commun refuse les autres symboles avant import, initialisation du simulateur, préenregistrement, évaluation ou lancement du flux. Les archives d’autres instruments sont conservées mais ne sont pas proposées dans l’interface. Les spécifications du fournisseur pour XAU/USD restent obligatoires ; cette restriction ne calibre aucun seuil et ne valide aucune performance.
+
 ## Temps et disponibilité
 
 `Bar.time` = ouverture UTC, `Bar.end` = fin exclusive. Une M1 n’entre dans le moteur qu’après sa clôture. Les agrégations UTC M5/M15/M30/H1/H4/D1 exigent toutes leurs M1 contiguës ; aucune H4/D1 de session fournisseur n’est prétendue. Si nécessaire un autre ancrage doit créer une version distincte. Les OPR sont ancrés à 09:30 America/New_York avec transitions DST IANA ; affichage America/Toronto.

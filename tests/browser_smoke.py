@@ -20,12 +20,14 @@ def main():
                 data=json.loads(opener.open(f'http://127.0.0.1:{port}/api/catalog',timeout=1).read());break
             except OSError:time.sleep(.1)
         else:raise RuntimeError('Serveur local indisponible')
+        assert data['supported_instrument']=='XAUUSD'
         with sync_playwright() as p:
             browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
             page=browser.new_page(viewport={'width':1440,'height':1050})
             errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
             page.goto(f'http://127.0.0.1:{port}',wait_until='networkidle')
             page.get_by_role('heading',name='Laboratoire de trading').wait_for()
+            assert page.get_by_text('XAU/USD exclusivement',exact=False).count()>=1
             page.get_by_role('button',name='Règles & sources').click()
             page.locator('#rule-list .rule').first.wait_for()
             assert page.locator('#rule-list .rule').count()==34
@@ -40,7 +42,8 @@ def main():
             assert not errors,errors
             result={'browser':'Chromium système, Playwright','desktop':[1440,1050],'mobile':[390,844],
                     'javascript_errors':errors,'rules_visible':34,'models_visible':len(data['models']),
-                    'result':'PASS','market_data_used':False,'server_stopped':True}
+                    'result':'PASS','market_data_used':False,'server_stopped':True,
+                    'supported_instrument':data['supported_instrument']}
             browser.close()
         (ROOT/'reports/browser-verification.json').write_text(json.dumps(result,indent=2))
         print(json.dumps(result))

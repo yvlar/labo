@@ -14,7 +14,7 @@ Les autres variantes sont exécutables et testées sans exception sur fixtures ;
 
 ## Mesures sur données de marché : AUCUNE
 
-Essai d’accès public effectué à `https://datafeed.dukascopy.com/datafeed/XAUUSD/2025/00/06/BID_candles_min_1.bi5` : réponse **HTTP429 Too Many Requests**. Aucun fichier de prix exploitable, aucun fournisseur authentifié, aucune spécification contractuelle vérifiée dans l’environnement. Aucun proxy alternatif, compte ou accès privé utilisé. EURUSD et Nasdaq restent sans fournisseur/symbole précis configuré ; aucun ETF, indice ou futur n’a remplacé XAUUSD.
+Essai d’accès public effectué à `https://datafeed.dukascopy.com/datafeed/XAUUSD/2025/00/06/BID_candles_min_1.bi5` : réponse **HTTP429 Too Many Requests**. Aucun fichier de prix exploitable, aucun fournisseur authentifié, aucune spécification contractuelle vérifiée dans l’environnement. Aucun proxy alternatif, compte ou accès privé utilisé. Depuis la restriction du 2026-11-06, le périmètre est exclusivement XAU/USD : les autres symboles sont refusés par le code. Aucun ETF, indice ou futur n’a remplacé XAUUSD.
 
 **Rapport historique et hors échantillon : BLOQUÉ.** Aucun nombre de trades de marché, taux de réussite, espérance, PnL ou courbe rentable publié. Les tests synthétiques ne sont jamais recyclés en rapport de performance. Les commandes sont prêtes pour un import vérifié et un préenregistrement réel.
 

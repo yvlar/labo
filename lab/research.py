@@ -7,7 +7,7 @@ import subprocess
 from copy import deepcopy
 from pathlib import Path
 from statistics import mean
-from .data import canonical, digest, dt, read_csv
+from .data import canonical, digest, dt, read_csv, validate_instrument
 from .engine import Engine, validate_config
 
 def revision(root):
@@ -64,6 +64,7 @@ def metrics(trades,curve,capital,seed=17):
 def preregister(root,config,dataset,splits,experiment):
     root=Path(root);cfg=json.loads(Path(config).read_text());validate_config(cfg)
     manifest=json.loads((Path(dataset)/'manifest.json').read_text())
+    validate_instrument(manifest['metadata'])
     if manifest['metadata']['synthetic'] or not manifest['metadata']['verified']:
         raise ValueError('Recherche de performance interdite : données synthétiques ou métadonnées non vérifiées')
     split=json.loads(Path(splits).read_text())
@@ -89,6 +90,7 @@ def preregister(root,config,dataset,splits,experiment):
     return path
 
 def verify_dataset(dataset,manifest):
+    validate_instrument(manifest['metadata'])
     bars=read_csv(Path(dataset)/'bars.csv')
     if digest({'bars':[b.record() for b in bars],'metadata':manifest['metadata']})!=manifest['hash']:
         raise ValueError('Empreinte normalisée invalide')
@@ -99,6 +101,7 @@ def evaluate(root,experiment):
     reg=json.loads((path/'preregistration.json').read_text())
     test=dict(reg);saved=test.pop('hash')
     if digest(test)!=saved:raise ValueError('Préenregistrement modifié')
+    validate_instrument(reg['manifest']['metadata'])
     if reg['manifest']['metadata']['synthetic'] or not reg['manifest']['metadata']['verified']:
         raise ValueError('Rapport de performance interdit : données synthétiques ou non vérifiées')
     if revision(root)['code_hash']!=reg['revision']['code_hash']:

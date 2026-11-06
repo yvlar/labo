@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict
 from datetime import timedelta
 from math import floor, ceil
+from .data import validate_instrument
 
 @dataclass
 class Intent:
@@ -23,6 +24,7 @@ def rounded(price,tick,up):
 
 class Broker:
     def __init__(self,cfg,instrument,emit):
+        validate_instrument(instrument)
         self.cfg,self.spec,self.emit=cfg,instrument,emit
         self.cash=cfg['capital'];self.position=None;self.orders=[];self.trades=[]
         self.equity=self.cash;self.peak=self.cash;self.drawdown=0

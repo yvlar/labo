@@ -13,5 +13,6 @@
   "models_visible": 27,
   "result": "PASS",
   "market_data_used": false,
-  "server_stopped": true
+  "server_stopped": true,
+  "supported_instrument": "XAUUSD"
 }

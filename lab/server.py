@@ -4,8 +4,22 @@ import sqlite3
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
-from .data import canonical, dt, read_csv
+from .data import canonical, dt, read_csv, validate_instrument, SUPPORTED_SYMBOL
 from .engine import Engine
+
+def validate_run_scope(run):
+    """Keep archives intact; only expose experiments for the supported pair."""
+    found=False
+    for name in ('history.json','identity.json','snapshot.json','report.json'):
+        path=Path(run)/name
+        if not path.is_file():continue
+        document=json.loads(path.read_text())
+        if name=='history.json':meta=document['manifest']['metadata']
+        elif name=='report.json':meta=document['preregistration']['manifest']['metadata']
+        else:meta=document['instrument']
+        validate_instrument(meta)
+        found=True
+    if not found:raise ValueError('Expérience sans métadonnées XAU/USD disponibles')
 
 def serve(root,host='127.0.0.1',port=8080):
     root=Path(root).resolve()
@@ -24,10 +38,14 @@ def serve(root,host='127.0.0.1',port=8080):
                 if u.path=='/api/catalog':
                     runs=[]
                     for p in sorted((root/'runs').iterdir()):
-                        if p.is_dir():runs.append({'id':p.name,'live':(p/'journal.sqlite').exists(),
-                            'report':(p/'report.json').exists(),'historical':(p/'history.json').exists()})
+                        if not p.is_dir():continue
+                        try:validate_run_scope(p)
+                        except (ValueError,KeyError,OSError):continue
+                        runs.append({'id':p.name,'live':(p/'journal.sqlite').exists(),
+                                     'report':(p/'report.json').exists(),'historical':(p/'history.json').exists()})
                     return self.reply({'runs':runs,'rules':json.loads((root/'docs/rules.json').read_text()),
                                        'models':json.loads((root/'configs/models.json').read_text()),
+                                       'supported_instrument':SUPPORTED_SYMBOL,
                                        'status':'Aucune mesure de marché disponible' if not runs else 'Laboratoire local'})
                 if u.path.startswith('/api/'):
                     name=q.get('run',[''])[0]
@@ -35,6 +53,7 @@ def serve(root,host='127.0.0.1',port=8080):
                         raise ValueError('Expérience invalide')
                     run=(root/'runs'/name).resolve()
                     if run.parent!=root/'runs':raise ValueError('Chemin invalide')
+                    validate_run_scope(run)
                     if u.path=='/api/report':
                         return self.reply(json.loads((run/'report.json').read_text()))
                     if u.path=='/api/snapshot':

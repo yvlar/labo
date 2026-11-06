@@ -3,7 +3,7 @@ import json
 import time
 from datetime import datetime
 from pathlib import Path
-from .data import Bar, UTC, canonical, digest
+from .data import Bar, UTC, canonical, digest, validate_instrument
 from .engine import Engine
 from .storage import Journal
 from .research import revision
@@ -24,6 +24,7 @@ def probe(feed,seconds,output):
 def run_live(root,config,metadata,feed,experiment,seconds=10,max_age=90):
     if seconds<=0 or max_age<=0:raise ValueError('Durée et fraîcheur doivent être positives')
     root=Path(root);cfg=json.loads(Path(config).read_text());spec=json.loads(Path(metadata).read_text())
+    validate_instrument(spec)
     if not spec.get('verified') or spec.get('synthetic') or spec.get('price_kind')!='bid_ask':
         raise ValueError('Flux direct : métadonnées vérifiées et données de marché bid/ask requises')
     path=root/'runs'/experiment;path.mkdir(parents=True,exist_ok=True)
